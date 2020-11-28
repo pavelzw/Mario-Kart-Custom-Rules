@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/views/create_players.dart';
+import 'package:mariokartcustomrules/views/add_players.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CreatePlayersPage(title: 'Create players'),
+      home: AddPlayers(title: 'Add players'),
     );
   }
 }
