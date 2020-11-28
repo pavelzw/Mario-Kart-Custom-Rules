@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mariokartcustomrules/views/add_players.dart';
 
+import 'game_screen.dart';
+
 class Player {
   final String name;
   final int score;
@@ -22,7 +24,16 @@ class MainScreen extends StatefulWidget {
 
 class MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
-  List<Player> players = [];
+  List<Player> players;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      players = [];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +79,23 @@ class MainScreenState extends State<MainScreen>
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.videogame_asset),
+        onPressed: () async {
+          final players = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => GameScreen(players: this.players),
+              fullscreenDialog: true,
+            ),
+          );
+          if (players != null) {
+            setState(() {
+              this.players = players;
+            });
+          }
+        },
       ),
     );
   }
