@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 
-final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
-
 class AddPlayers extends StatefulWidget {
-  AddPlayers({Key key, this.title, List<String> data})
-      : data = data ?? <String>[""];
+  AddPlayers({Key key, this.data});
   final List<String> data;
-
-  final String title;
+  final String title = "Add players";
 
   @override
   _AddPlayersState createState() => _AddPlayersState();
 }
 
 class _AddPlayersState extends State<AddPlayers> {
-  final List<List<String>> players = [
-    <String>['Rose', 'SunFlower'],
-    <String>['SUV', 'CityCar', 'Jeep'],
-  ];
-
   List<TextEditingController> controllers;
 
   @override
@@ -55,7 +46,7 @@ class _AddPlayersState extends State<AddPlayers> {
                           color: Colors.blue,
                           textColor: Colors.white,
                           child: Text(
-                            "Start",
+                            "Ready",
                             style: TextStyle(fontSize: 20.0),
                           ),
                           onPressed: () {
