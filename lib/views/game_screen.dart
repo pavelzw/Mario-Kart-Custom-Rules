@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/countdown.dart';
-import 'package:flutter_countdown_timer/countdown_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:mariokartcustomrules/views/result_screen.dart';
 
 import 'main_screen.dart';
 
@@ -20,24 +17,57 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int endTime;
+  int timeLeft;
+  String timeText;
+  String buttonText;
   Timer timer;
-  String timerText;
+  String revealText;
+  int randomPlace;
+  bool revealed;
 
   @override
   void initState() {
     super.initState();
+    const defaultDuration = 10;
+    endTime = DateTime.now().millisecondsSinceEpoch + 1000 * defaultDuration;
+
+    revealed = false;
+    timer = new Timer.periodic(Duration(milliseconds: 500), _update);
+    Random random = new Random();
+    randomPlace = random.nextInt(12) + 1;
 
     setState(() {
-      timerText = "";
-      endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+      timeText = _timePrint(defaultDuration);
+      revealText = "Reveal";
     });
   }
 
-  String _timePrint(CurrentRemainingTime time) {
-    if (time == null) {
-      return "FINITO";
+  String _timePrint(int time) {
+    return '${_getNumberAddZero(time ~/ 60)}:${_getNumberAddZero(time % 60)}';
+  }
+
+  void _update(Timer timer) {
+    timeLeft =
+        max(0, (endTime - DateTime.now().millisecondsSinceEpoch) ~/ 1000);
+
+    if (timeLeft == 0) {
+      setState(() {
+        _reveal();
+      });
+    } else {
+      setState(() {
+        timeText = _timePrint(timeLeft);
+      });
     }
-    return '${_getNumberAddZero(time.min ?? 0)}:${_getNumberAddZero(time.sec ?? 0)}';
+  }
+
+  void _reveal() {
+    revealed = true;
+    timer.cancel();
+    setState(() {
+      timeText = randomPlace.toString();
+      revealText = "Enter results";
+    });
   }
 
   String _getNumberAddZero(int time) {
@@ -60,17 +90,39 @@ class _GameScreenState extends State<GameScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CountdownTimer(
-                  endTime: endTime,
-                  widgetBuilder: (_, CurrentRemainingTime time) {
-                    return Text(
-                      _timePrint(time),
-                      style: TextStyle(fontSize: 60),
-                    );
-                  },
+                Text(
+                  timeText,
+                  style: TextStyle(fontSize: 60),
                 ),
               ],
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: FlatButton(
+                    child: Text(revealText),
+                    onPressed: () {
+                      if (!revealed) {
+                        _reveal();
+                      } else {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ResultScreen(players: widget.players)));
+                      }
+                    },
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
