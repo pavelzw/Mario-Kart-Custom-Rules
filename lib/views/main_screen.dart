@@ -69,11 +69,14 @@ class MainScreenState extends State<MainScreen>
             }
           },
         ),
-        Text(
-          "Players: " +
-              players.map((player) => player.name).toList().join(", "),
-          style: TextStyle(fontSize: 20.0),
-          textAlign: TextAlign.left,
+        Expanded(
+          child: Text(
+            "Players: " +
+                players.map((player) => player.name).toList().join(", "),
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 20.0),
+            textAlign: TextAlign.left,
+          ),
         ),
       ],
     );

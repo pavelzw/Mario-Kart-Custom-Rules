@@ -22,7 +22,7 @@ class _AddPlayersState extends State<AddPlayers> {
           return TextEditingController(text: s);
         }).toList();
       } else {
-        controllers = [];
+        controllers = [TextEditingController()];
       }
     });
   }
@@ -55,8 +55,12 @@ class _AddPlayersState extends State<AddPlayers> {
                               return;
                             }
 
-                            final list =
-                                controllers.map((c) => c.text).toList();
+                            final list = controllers
+                                .map((c) => c.text == ""
+                                    ? "Player " +
+                                        (controllers.indexOf(c) + 1).toString()
+                                    : c.text)
+                                .toList();
                             Navigator.pop(context, list);
                           },
                         ),
