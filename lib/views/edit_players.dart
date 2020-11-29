@@ -14,15 +14,15 @@ class PlayerEntry {
   });
 }
 
-class AddPlayers extends StatefulWidget {
-  AddPlayers({Key key, this.players});
+class EditPlayers extends StatefulWidget {
+  EditPlayers({Key key, this.players});
   final List<Player> players;
 
   @override
-  _AddPlayersState createState() => _AddPlayersState();
+  _EditPlayersState createState() => _EditPlayersState();
 }
 
-class _AddPlayersState extends State<AddPlayers> {
+class _EditPlayersState extends State<EditPlayers> {
   List<PlayerEntry> entries;
 
   Container _getEntry(PlayerEntry e) {
@@ -102,7 +102,7 @@ class _AddPlayersState extends State<AddPlayers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('add-players')),
+        title: Text(AppLocalizations.of(context).translate('edit-players')),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -119,7 +119,13 @@ class _AddPlayersState extends State<AddPlayers> {
                       ))
                   .toList();
 
-              Navigator.pop(context, players);
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop(players);
+              } else {
+                // first launch with no players
+                Navigator.of(context)
+                    .pushReplacementNamed('/main', arguments: players);
+              }
             },
           )
         ],
@@ -140,6 +146,7 @@ class _AddPlayersState extends State<AddPlayers> {
         children: [
           FloatingActionButton(
             heroTag: 'min',
+            tooltip: AppLocalizations.of(context).translate("remove-player"),
             onPressed: () {
               if (entries.length <= 1) return;
               setState(() {
@@ -151,6 +158,7 @@ class _AddPlayersState extends State<AddPlayers> {
           SizedBox(width: 8),
           FloatingActionButton(
             heroTag: 'add',
+            tooltip: AppLocalizations.of(context).translate("add-player"),
             onPressed: () {
               if (entries.length >= 12) return;
               setState(() {

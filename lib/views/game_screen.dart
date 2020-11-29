@@ -41,6 +41,12 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   String _timePrint(int time) {
     return '${_getNumberAddZero(time ~/ 60)}:${_getNumberAddZero(time % 60)}';
   }
@@ -77,59 +83,65 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('play')),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Row(
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage("assets/background.jpg"),
+        fit: BoxFit.cover,
+      )),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).translate('play')),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    timeText,
+                    style: TextStyle(fontSize: 60, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  timeText,
-                  style: TextStyle(fontSize: 60),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: FlatButton(
+                      child: Text(revealed
+                          ? AppLocalizations.of(context)
+                              .translate('enter-results')
+                          : AppLocalizations.of(context).translate('reveal')),
+                      onPressed: () async {
+                        if (!revealed) {
+                          _reveal();
+                        } else {
+                          Navigator.of(context).pop(await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResultScreen(
+                                        players: widget.players,
+                                        targetPlace: randomPlace,
+                                      ))));
+                        }
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: FlatButton(
-                    child: Text(revealed
-                        ? AppLocalizations.of(context)
-                            .translate('enter-results')
-                        : AppLocalizations.of(context).translate('reveal')),
-                    onPressed: () async {
-                      if (!revealed) {
-                        _reveal();
-                      } else {
-                        Navigator.pop(
-                            context,
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ResultScreen(
-                                          players: widget.players,
-                                          targetPlace: randomPlace,
-                                        ))));
-                      }
-                    },
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

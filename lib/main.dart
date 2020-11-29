@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/views/main_screen.dart';
+import 'package:mariokartcustomrules/route_generator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_localizations.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MarioKartCustomRules());
 }
 
-class MyApp extends StatelessWidget {
+class MarioKartCustomRules extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class MyApp extends StatelessWidget {
 
         return supportedLocales.first;
       },
-      home: MainScreen(),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

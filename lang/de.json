@@ -1,6 +1,8 @@
 {
   "app-title": "Mario Kart Custom Rules",
-  "add-players": "Spieler hinzufügen",
+  "edit-players": "Spieler bearbeiten",
+  "add-player": "Spieler hinzufügen",
+  "remove-player": "Spieler entfernen",
   "player": "Spieler",
   "players": "Spieler",
   "play": "Spielen",

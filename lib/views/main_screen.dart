@@ -2,19 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/add_players.dart';
+import 'package:mariokartcustomrules/views/edit_players.dart';
 
 import '../app_localizations.dart';
 import 'game_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  final List<Player> players;
+
+  MainScreen({
+    @required this.players,
+  });
+
   @override
-  State<StatefulWidget> createState() {
-    return MainScreenState();
-  }
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class MainScreenState extends State<MainScreen>
+class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
   List<Player> players;
 
@@ -23,7 +27,7 @@ class MainScreenState extends State<MainScreen>
     super.initState();
 
     setState(() {
-      players = [];
+      players = widget.players;
     });
   }
 
@@ -50,39 +54,6 @@ class MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    Row playerEdit = Row(
-      children: [
-        IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () async {
-            final players = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddPlayers(players: this.players),
-                fullscreenDialog: true,
-              ),
-            );
-
-            if (players != null) {
-              setState(() {
-                this.players = players;
-              });
-            }
-          },
-        ),
-        Expanded(
-          child: Text(
-            AppLocalizations.of(context).translate('players') +
-                (players.length == 0 ? "" : ": ") +
-                players.map((player) => player.name).toList().join(", "),
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 20.0),
-            textAlign: TextAlign.left,
-          ),
-        ),
-      ],
-    );
-
     // leaderboard
     List<Player> playersSort = List.from(players);
     playersSort.sort((p1, p2) => p2.score - p1.score);
@@ -105,7 +76,38 @@ class MainScreenState extends State<MainScreen>
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: <Widget>[
-            playerEdit,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: FlatButton(
+                      child:
+                          Text(AppLocalizations.of(context).translate("play")),
+                      onPressed: () async {
+                        final players = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                GameScreen(players: this.players),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                        if (players != null) {
+                          setState(() {
+                            this.players = players;
+                          });
+                        }
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Expanded(
               child: leaderboard,
             ),
@@ -113,15 +115,17 @@ class MainScreenState extends State<MainScreen>
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.videogame_asset),
+        child: Icon(Icons.edit),
+        tooltip: AppLocalizations.of(context).translate("edit-players"),
         onPressed: () async {
           final players = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => GameScreen(players: this.players),
+              builder: (context) => EditPlayers(players: this.players),
               fullscreenDialog: true,
             ),
           );
+
           if (players != null) {
             setState(() {
               this.players = players;
