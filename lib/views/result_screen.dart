@@ -3,7 +3,6 @@ import 'package:mariokartcustomrules/models/player.dart';
 
 import 'package:rxdart/rxdart.dart';
 import '../app_localizations.dart';
-import 'main_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   ResultScreen({Key key, this.players, this.targetPlace});
@@ -16,6 +15,7 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   List<TextField> textFields;
+  List<Row> rows;
 
   @override
   void initState() {
@@ -28,6 +28,25 @@ class _ResultScreenState extends State<ResultScreen> {
               keyboardType: TextInputType.number,
             ))
         .toList();
+
+    rows = [];
+    for (int i = 0; i < widget.players.length; i++) {
+      Player player = widget.players[i];
+      TextField textField = textFields[i];
+      rows.add(Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+            child: Image(
+              image: AssetImage(player.getPlayerIconPath()),
+              height: 45,
+            ),
+          ),
+          Expanded(child: textField),
+        ],
+      ));
+    }
   }
 
   int _getPoints(int place) {
@@ -122,7 +141,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             Container(
               child: Column(
-                children: textFields,
+                children: rows,
               ),
             ),
           ],
