@@ -29,8 +29,66 @@ class _ResultScreenState extends State<ResultScreen> {
         .toList();
   }
 
-  int _getPoint(int place) {
-    return (place - widget.targetPlace).abs() + 1;
+  int _getPoints(int place) {
+    // convertedPlace is of this form
+    //  1  2  3  4  5  t  7  8  9 10 11 12
+    //  10 8  6  4  2  1  3  5  7  9 11 12
+    // so it is better to be one place in front of the target than behind it
+    int convertedPlace;
+    if (place == widget.targetPlace) {
+      convertedPlace = 1;
+    } else if (place > 2 * widget.targetPlace - 1) {
+      convertedPlace = place;
+    } else if (place > widget.targetPlace) {
+      convertedPlace = (place - widget.targetPlace) * 2 + 1;
+    } else if (place < 2 * widget.targetPlace - 12 - 1) {
+      convertedPlace = 12 - place + 1;
+    } else {
+      convertedPlace = (widget.targetPlace - place) * 2;
+    }
+
+    // default Mario Kart conversion
+    int points;
+    switch (convertedPlace) {
+      case 1:
+        points = 15;
+        break;
+      case 2:
+        points = 12;
+        break;
+      case 3:
+        points = 10;
+        break;
+      case 4:
+        points = 9;
+        break;
+      case 5:
+        points = 8;
+        break;
+      case 6:
+        points = 7;
+        break;
+      case 7:
+        points = 6;
+        break;
+      case 8:
+        points = 5;
+        break;
+      case 9:
+        points = 4;
+        break;
+      case 10:
+        points = 3;
+        break;
+      case 11:
+        points = 2;
+        break;
+      case 12:
+        points = 1;
+        break;
+    }
+
+    return points;
   }
 
   @override
@@ -42,7 +100,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ))
         .toList()
           ..addAll(positions.map((e) => Center(
-                child: Text(_getPoint(e).toString()),
+                child: Text(_getPoints(e).toString()),
               )));
     GridView placePoints = GridView.count(
       crossAxisCount: 12,
@@ -80,7 +138,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   (player, place) => Player(
                       name: player.name,
                       score: player.score +
-                          _getPoint(int.parse(place.controller.text))))
+                          _getPoints(int.parse(place.controller.text))))
               .toList();
 
           Navigator.pop(context, list);

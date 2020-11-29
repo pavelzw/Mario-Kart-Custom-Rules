@@ -78,20 +78,18 @@ class MainScreenState extends State<MainScreen>
       ],
     );
 
+    // leaderboard
     List<Player> playersSort = List.from(players);
-    playersSort.sort((p1, p2) => p1.score - p2.score);
-
+    playersSort.sort((p1, p2) => p2.score - p1.score);
     List<ListTile> leaderboardTiles = playersSort
-        .map((p) => _createLeaderboardItem(p, playersSort.indexOf(p)))
+        .map((p) => _createLeaderboardItem(p, playersSort.indexOf(p) + 1))
         .toList();
-
-    Expanded leaderboard = Expanded(
-      child: ListView(
-        children: ListTile.divideTiles(
-          context: context,
-          tiles: leaderboardTiles,
-        ).toList(),
-      ),
+    ListView leaderboard = ListView(
+      physics: NeverScrollableScrollPhysics(),
+      children: ListTile.divideTiles(
+        context: context,
+        tiles: leaderboardTiles,
+      ).toList(),
     );
 
     return Scaffold(
@@ -103,7 +101,9 @@ class MainScreenState extends State<MainScreen>
         child: Column(
           children: <Widget>[
             playerEdit,
-            leaderboard,
+            Expanded(
+              child: leaderboard,
+            ),
           ],
         ),
       ),
