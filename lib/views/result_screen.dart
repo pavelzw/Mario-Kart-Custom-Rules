@@ -139,7 +139,8 @@ class _ResultScreenState extends State<ResultScreen> {
                   (player, place) => Player(
                       name: player.name,
                       score: player.score +
-                          _getPoints(int.parse(place.controller.text))))
+                          _getPoints(int.parse(place.controller.text)),
+                      icon: player.icon))
               .toList();
 
           Navigator.pop(context, list);
