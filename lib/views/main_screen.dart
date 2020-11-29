@@ -38,8 +38,19 @@ class MainScreenState extends State<MainScreen>
 
   ListTile _createLeaderboardItem(Player p, int position) {
     return ListTile(
-      leading: CircleAvatar(
-        child: Text(position.toString()),
+      leading: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 8,
+        children: [
+          CircleAvatar(
+            child: Text(position.toString()),
+          ),
+          Image(
+            image: AssetImage("assets/player_icons/secret.png"),
+            height: 45,
+          ),
+        ],
       ),
       title: Text(p.name),
       trailing: Text(p.score.toString()),

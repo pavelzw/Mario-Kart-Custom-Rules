@@ -54,6 +54,7 @@ flutter:
   assets:
     - lang/en.json
     - lang/de.json
+    - assets/player_icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

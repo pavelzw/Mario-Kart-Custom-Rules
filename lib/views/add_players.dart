@@ -64,15 +64,30 @@ class _AddPlayersState extends State<AddPlayers> {
                     children: controllers.map((controller) {
                       return Container(
                         padding: const EdgeInsets.all(16),
-                        child: TextField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                            labelText: AppLocalizations.of(context)
-                                    .translate('player') +
-                                " " +
-                                (controllers.indexOf(controller) + 1)
-                                    .toString(),
-                          ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: Image(
+                                image: AssetImage(
+                                    "assets/player_icons/secret.png"),
+                                height: 45,
+                              ),
+                            ),
+                            Expanded(
+                              child: TextField(
+                                controller: controller,
+                                decoration: InputDecoration(
+                                  labelText: AppLocalizations.of(context)
+                                          .translate('player') +
+                                      " " +
+                                      (controllers.indexOf(controller) + 1)
+                                          .toString(),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     }).toList(),
