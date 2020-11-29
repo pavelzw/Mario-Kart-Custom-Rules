@@ -27,7 +27,8 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    const defaultDuration = 10;
+    const defaultDuration = 120;
+
     endTime = DateTime.now().millisecondsSinceEpoch + 1000 * defaultDuration;
 
     revealed = false;

@@ -107,12 +107,6 @@ class _AddPlayersState extends State<AddPlayers> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              if (entries.isEmpty) {
-                print(
-                    AppLocalizations.of(context).translate('no-players-error'));
-                return;
-              }
-
               final List<Player> players = entries
                   .map((e) => Player(
                         name: e.controller.text == ""
@@ -147,6 +141,7 @@ class _AddPlayersState extends State<AddPlayers> {
           FloatingActionButton(
             heroTag: 'min',
             onPressed: () {
+              if (entries.length <= 1) return;
               setState(() {
                 entries.removeLast();
               });
@@ -157,6 +152,7 @@ class _AddPlayersState extends State<AddPlayers> {
           FloatingActionButton(
             heroTag: 'add',
             onPressed: () {
+              if (entries.length >= 12) return;
               setState(() {
                 entries.add(PlayerEntry(
                     player: Player(name: ""),
