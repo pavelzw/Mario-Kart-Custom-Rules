@@ -30,45 +30,31 @@ class _AddPlayersState extends State<AddPlayers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              if (controllers.isEmpty) {
+                print('You need to add at least one player');
+                return;
+              }
+
+              final list = controllers
+                  .map((c) => c.text == ""
+                      ? "Player " + (controllers.indexOf(c) + 1).toString()
+                      : c.text)
+                  .toList();
+              Navigator.pop(context, list);
+            },
+          )
+        ],
+      ),
       body: controllers == null
           ? CircularProgressIndicator()
           : Column(
               children: <Widget>[
-                // Start button
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                        child: FlatButton(
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          child: Text(
-                            "Ready",
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                          onPressed: () {
-                            if (controllers.isEmpty) {
-                              print('You need to add at least one player');
-                              return;
-                            }
-
-                            final list = controllers
-                                .map((c) => c.text == ""
-                                    ? "Player " +
-                                        (controllers.indexOf(c) + 1).toString()
-                                    : c.text)
-                                .toList();
-                            Navigator.pop(context, list);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // Player selection
                 new Expanded(
                   child: ListView(
                     children: controllers.map((controller) {
