@@ -124,13 +124,11 @@ class _GameScreenState extends State<GameScreen> {
                         if (!revealed) {
                           _reveal();
                         } else {
-                          Navigator.of(context).pop(await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ResultScreen(
-                                        players: widget.players,
-                                        targetPlace: randomPlace,
-                                      ))));
+                          Navigator.of(context).pop(await Navigator.of(context)
+                              .pushNamed('/results', arguments: {
+                            'players': widget.players,
+                            'target-place': randomPlace
+                          }));
                         }
                       },
                       color: Colors.blue,

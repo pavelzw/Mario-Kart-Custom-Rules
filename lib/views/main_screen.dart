@@ -87,14 +87,8 @@ class _MainScreenState extends State<MainScreen>
                       child:
                           Text(AppLocalizations.of(context).translate("play")),
                       onPressed: () async {
-                        final players = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                GameScreen(players: this.players),
-                            fullscreenDialog: true,
-                          ),
-                        );
+                        final players = await Navigator.of(context)
+                            .pushNamed('/game', arguments: this.players);
                         if (players != null) {
                           setState(() {
                             this.players = players;
@@ -118,13 +112,8 @@ class _MainScreenState extends State<MainScreen>
         child: Icon(Icons.edit),
         tooltip: AppLocalizations.of(context).translate("edit-players"),
         onPressed: () async {
-          final players = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EditPlayers(players: this.players),
-              fullscreenDialog: true,
-            ),
-          );
+          final players = await Navigator.of(context)
+              .pushNamed('/edit-players', arguments: this.players);
 
           if (players != null) {
             setState(() {
