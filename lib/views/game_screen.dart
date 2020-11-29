@@ -4,12 +4,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/views/result_screen.dart';
 
+import '../app_localizations.dart';
 import 'main_screen.dart';
 
 class GameScreen extends StatefulWidget {
   GameScreen({Key key, this.players});
   final List<Player> players;
-  final String title = "Play";
 
   @override
   _GameScreenState createState() => _GameScreenState();
@@ -21,7 +21,6 @@ class _GameScreenState extends State<GameScreen> {
   String timeText;
   String buttonText;
   Timer timer;
-  String revealText;
   int randomPlace;
   bool revealed;
 
@@ -38,7 +37,6 @@ class _GameScreenState extends State<GameScreen> {
 
     setState(() {
       timeText = _timePrint(defaultDuration);
-      revealText = "Reveal";
     });
   }
 
@@ -66,7 +64,6 @@ class _GameScreenState extends State<GameScreen> {
     timer.cancel();
     setState(() {
       timeText = randomPlace.toString();
-      revealText = "Enter results";
     });
   }
 
@@ -81,7 +78,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Play'),
+        title: Text(AppLocalizations.of(context).translate('play')),
       ),
       body: Column(
         children: [
@@ -105,7 +102,10 @@ class _GameScreenState extends State<GameScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: FlatButton(
-                    child: Text(revealText),
+                    child: Text(revealed
+                        ? AppLocalizations.of(context)
+                            .translate('enter-results')
+                        : AppLocalizations.of(context).translate('reveal')),
                     onPressed: () async {
                       if (!revealed) {
                         _reveal();

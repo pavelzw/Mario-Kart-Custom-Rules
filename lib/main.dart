@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/views/main_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:global_configuration/global_configuration.dart';
 
 import 'app_localizations.dart';
 

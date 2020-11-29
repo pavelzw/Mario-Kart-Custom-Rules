@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mariokartcustomrules/views/add_players.dart';
 
+import '../app_localizations.dart';
 import 'game_screen.dart';
 
 class Player {
@@ -71,7 +72,8 @@ class MainScreenState extends State<MainScreen>
         ),
         Expanded(
           child: Text(
-            "Players: " +
+            AppLocalizations.of(context).translate('players') +
+                (players.length == 0 ? "" : ": ") +
                 players.map((player) => player.name).toList().join(", "),
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 20.0),
@@ -97,7 +99,7 @@ class MainScreenState extends State<MainScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mario Kart Custom Rules'),
+        title: Text(AppLocalizations.of(context).translate('app-title')),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
