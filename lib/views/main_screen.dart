@@ -7,7 +7,7 @@ import 'game_screen.dart';
 
 class Player {
   final String name;
-  final int score;
+  int score;
 
   Player({
     @required this.name,

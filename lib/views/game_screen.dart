@@ -113,8 +113,10 @@ class _GameScreenState extends State<GameScreen> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    ResultScreen(players: widget.players)));
+                                builder: (context) => ResultScreen(
+                                      players: widget.players,
+                                      targetPlace: randomPlace,
+                                    )));
                       }
                     },
                     color: Colors.blue,
