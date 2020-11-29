@@ -1,20 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/views/add_players.dart';
 
 import '../app_localizations.dart';
 import 'game_screen.dart';
-
-class Player {
-  final String name;
-  int score;
-
-  Player({
-    @required this.name,
-    this.score = 0,
-  });
-}
 
 class MainScreen extends StatefulWidget {
   @override
@@ -47,7 +38,7 @@ class MainScreenState extends State<MainScreen>
             child: Text(position.toString()),
           ),
           Image(
-            image: AssetImage("assets/player_icons/secret.png"),
+            image: AssetImage(p.getPlayerIconPath()),
             height: 45,
           ),
         ],
@@ -64,19 +55,17 @@ class MainScreenState extends State<MainScreen>
         IconButton(
           icon: Icon(Icons.edit),
           onPressed: () async {
-            final playerNames = await Navigator.push(
+            final players = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AddPlayers(
-                    data: players.map((player) => player.name).toList()),
+                builder: (context) => AddPlayers(players: this.players),
                 fullscreenDialog: true,
               ),
             );
 
-            if (playerNames != null) {
+            if (players != null) {
               setState(() {
-                players = List<Player>.from(
-                    playerNames.map((name) => Player(name: name)).toList());
+                this.players = players;
               });
             }
           },

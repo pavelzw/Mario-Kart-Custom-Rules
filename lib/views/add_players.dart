@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:mariokartcustomrules/models/player.dart';
 
 import '../app_localizations.dart';
 
+class PlayerEntry {
+  final Player player;
+  TextEditingController controller;
+
+  PlayerEntry({
+    @required this.player,
+    @required this.controller,
+  });
+}
+
 class AddPlayers extends StatefulWidget {
-  AddPlayers({Key key, this.data});
-  final List<String> data;
+  AddPlayers({Key key, this.players});
+  final List<Player> players;
 
   @override
   _AddPlayersState createState() => _AddPlayersState();
 }
 
 class _AddPlayersState extends State<AddPlayers> {
-  List<TextEditingController> controllers;
+  List<PlayerEntry> entries;
 
   @override
   void initState() {
     super.initState();
 
     setState(() {
-      if (widget.data.isNotEmpty) {
-        controllers = widget.data.map((s) {
-          return TextEditingController(text: s);
-        }).toList();
+      if (widget.players.isNotEmpty) {
+        entries = widget.players
+            .map((p) => PlayerEntry(
+                player: p, controller: TextEditingController(text: p.name)))
+            .toList();
       } else {
-        controllers = [TextEditingController()];
+        Player defaultPlayer = Player(name: "");
+        entries = [
+          PlayerEntry(
+              player: defaultPlayer, controller: TextEditingController())
+        ];
       }
     });
   }
@@ -37,31 +53,36 @@ class _AddPlayersState extends State<AddPlayers> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              if (controllers.isEmpty) {
+              if (entries.isEmpty) {
                 print(
                     AppLocalizations.of(context).translate('no-players-error'));
                 return;
               }
 
-              final list = controllers
-                  .map((c) => c.text == ""
-                      ? AppLocalizations.of(context).translate('player') +
-                          " " +
-                          (controllers.indexOf(c) + 1).toString()
-                      : c.text)
+              final List<Player> players = entries
+                  .map((e) => Player(
+                        name: e.controller.text == ""
+                            ? AppLocalizations.of(context).translate('player') +
+                                " " +
+                                (entries.indexOf(e) + 1).toString()
+                            : e.controller.text,
+                        playerIcon: e.player.playerIcon,
+                        score: e.player.score,
+                      ))
                   .toList();
-              Navigator.pop(context, list);
+
+              Navigator.pop(context, players);
             },
           )
         ],
       ),
-      body: controllers == null
+      body: entries == null
           ? CircularProgressIndicator()
           : Column(
               children: <Widget>[
                 new Expanded(
                   child: ListView(
-                    children: controllers.map((controller) {
+                    children: entries.map((e) {
                       return Container(
                         padding: const EdgeInsets.all(16),
                         child: Row(
@@ -70,20 +91,18 @@ class _AddPlayersState extends State<AddPlayers> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                               child: Image(
-                                image: AssetImage(
-                                    "assets/player_icons/secret.png"),
+                                image: AssetImage(e.player.getPlayerIconPath()),
                                 height: 45,
                               ),
                             ),
                             Expanded(
                               child: TextField(
-                                controller: controller,
+                                controller: e.controller,
                                 decoration: InputDecoration(
                                   labelText: AppLocalizations.of(context)
                                           .translate('player') +
                                       " " +
-                                      (controllers.indexOf(controller) + 1)
-                                          .toString(),
+                                      (entries.indexOf(e) + 1).toString(),
                                 ),
                               ),
                             ),
@@ -102,7 +121,7 @@ class _AddPlayersState extends State<AddPlayers> {
             heroTag: 'min',
             onPressed: () {
               setState(() {
-                controllers.removeLast();
+                entries.removeLast();
               });
             },
             child: Icon(Icons.remove),
@@ -112,7 +131,9 @@ class _AddPlayersState extends State<AddPlayers> {
             heroTag: 'add',
             onPressed: () {
               setState(() {
-                controllers.add(TextEditingController());
+                entries.add(PlayerEntry(
+                    player: Player(name: ""),
+                    controller: TextEditingController()));
               });
             },
             child: Icon(Icons.add),

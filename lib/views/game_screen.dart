@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/views/result_screen.dart';
 
 import '../app_localizations.dart';
-import 'main_screen.dart';
 
 class GameScreen extends StatefulWidget {
   GameScreen({Key key, this.players});

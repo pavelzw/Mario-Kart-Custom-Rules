@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mariokartcustomrules/models/player.dart';
 
 import 'package:rxdart/rxdart.dart';
 import '../app_localizations.dart';
