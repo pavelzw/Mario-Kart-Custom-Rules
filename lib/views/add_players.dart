@@ -62,7 +62,7 @@ class _AddPlayersState extends State<AddPlayers> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Pick an icon',
+            AppLocalizations.of(context).translate('pick-icon'),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: IconPicker(),

@@ -7,5 +7,6 @@
   "no-players-error": "You need to add at least one player.",
   "reveal": "Reveal",
   "enter-results": "Enter results",
-  "results": "Results"
+  "results": "Results",
+  "pick-icon": "Pick an icon"
 }
