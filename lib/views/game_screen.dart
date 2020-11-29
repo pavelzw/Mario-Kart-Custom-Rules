@@ -106,17 +106,19 @@ class _GameScreenState extends State<GameScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: FlatButton(
                     child: Text(revealText),
-                    onPressed: () {
+                    onPressed: () async {
                       if (!revealed) {
                         _reveal();
                       } else {
-                        Navigator.pushReplacement(
+                        Navigator.pop(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => ResultScreen(
-                                      players: widget.players,
-                                      targetPlace: randomPlace,
-                                    )));
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResultScreen(
+                                          players: widget.players,
+                                          targetPlace: randomPlace,
+                                        ))));
                       }
                     },
                     color: Colors.blue,
