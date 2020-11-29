@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../app_localizations.dart';
+
 class AddPlayers extends StatefulWidget {
   AddPlayers({Key key, this.data});
   final List<String> data;
-  final String title = "Add players";
 
   @override
   _AddPlayersState createState() => _AddPlayersState();
@@ -31,7 +32,7 @@ class _AddPlayersState extends State<AddPlayers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(AppLocalizations.of(context).translate('add-players')),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
