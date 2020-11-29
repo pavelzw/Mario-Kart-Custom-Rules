@@ -1,3 +1,11 @@
 {
-  "add-players": "Spieler hinzufügen"
+  "app-title": "Mario Kart Custom Rules",
+  "add-players": "Spieler hinzufügen",
+  "player": "Spieler",
+  "players": "Spieler",
+  "play": "Spielen",
+  "no-players-error": "Du musst mindestens einen Spieler hinzufügen.",
+  "reveal": "Aufdecken",
+  "enter-results": "Ergebnisse eintragen",
+  "results": "Ergebnisse"
 }

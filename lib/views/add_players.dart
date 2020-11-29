@@ -38,13 +38,16 @@ class _AddPlayersState extends State<AddPlayers> {
             icon: Icon(Icons.save),
             onPressed: () {
               if (controllers.isEmpty) {
-                print('You need to add at least one player');
+                print(
+                    AppLocalizations.of(context).translate('no-players-error'));
                 return;
               }
 
               final list = controllers
                   .map((c) => c.text == ""
-                      ? "Player " + (controllers.indexOf(c) + 1).toString()
+                      ? AppLocalizations.of(context).translate('player') +
+                          " " +
+                          (controllers.indexOf(c) + 1).toString()
                       : c.text)
                   .toList();
               Navigator.pop(context, list);
@@ -64,8 +67,11 @@ class _AddPlayersState extends State<AddPlayers> {
                         child: TextField(
                           controller: controller,
                           decoration: InputDecoration(
-                            labelText:
-                                'Player ${controllers.indexOf(controller) + 1}',
+                            labelText: AppLocalizations.of(context)
+                                    .translate('player') +
+                                " " +
+                                (controllers.indexOf(controller) + 1)
+                                    .toString(),
                           ),
                         ),
                       );
@@ -95,7 +101,7 @@ class _AddPlayersState extends State<AddPlayers> {
               });
             },
             child: Icon(Icons.add),
-          )
+          ),
         ],
       ),
     );

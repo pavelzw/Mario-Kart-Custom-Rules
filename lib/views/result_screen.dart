@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:rxdart/rxdart.dart';
+import '../app_localizations.dart';
 import 'main_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   ResultScreen({Key key, this.players, this.targetPlace});
   final List<Player> players;
   final int targetPlace;
-  final String title = "Play";
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
@@ -47,7 +47,7 @@ class _ResultScreenState extends State<ResultScreen> {
       convertedPlace = (widget.targetPlace - place) * 2;
     }
 
-    // default Mario Kart conversion
+    // default Mario Kart point conversion
     int points;
     switch (convertedPlace) {
       case 1:
@@ -109,7 +109,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Results'),
+        title: Text(AppLocalizations.of(context).translate('results')),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
