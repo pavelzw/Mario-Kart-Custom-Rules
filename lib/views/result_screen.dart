@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/models/player.dart';
 
@@ -50,65 +52,27 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   int _getPoints(int place) {
+    const Map<int, int> pointMap = {1: 15, 2: 12, 3: 10, 4: 9, 5: 8, 6: 7, 7: 6, 8: 5, 9: 4, 10: 3, 11: 2, 12: 1};
     // convertedPlace is of this form
     //  1  2  3  4  5  t  7  8  9 10 11 12
     //  10 8  6  4  2  1  3  5  7  9 11 12
     // so it is better to be one place in front of the target than behind it
+    int targetPlace = widget.targetPlace;
+    int distance = min(targetPlace - 1, pointMap.length - targetPlace);
+
     int convertedPlace;
-    if (place == widget.targetPlace) {
-      convertedPlace = 1;
-    } else if (place > 2 * widget.targetPlace - 1) {
-      convertedPlace = place;
-    } else if (place > widget.targetPlace) {
-      convertedPlace = (place - widget.targetPlace) * 2 + 1;
-    } else if (place < 2 * widget.targetPlace - 12 - 1) {
-      convertedPlace = 12 - place + 1;
+    if (place >= targetPlace - distance && place <= targetPlace + distance) {
+      if (place < targetPlace) {
+        convertedPlace = 2 * (targetPlace - place);
+      } else {
+        convertedPlace = 1 + 2 * (place - targetPlace);
+      }
     } else {
-      convertedPlace = (widget.targetPlace - place) * 2;
+      convertedPlace = distance + 1 + (targetPlace - place).abs();
     }
 
     // default Mario Kart point conversion
-    int points;
-    switch (convertedPlace) {
-      case 1:
-        points = 15;
-        break;
-      case 2:
-        points = 12;
-        break;
-      case 3:
-        points = 10;
-        break;
-      case 4:
-        points = 9;
-        break;
-      case 5:
-        points = 8;
-        break;
-      case 6:
-        points = 7;
-        break;
-      case 7:
-        points = 6;
-        break;
-      case 8:
-        points = 5;
-        break;
-      case 9:
-        points = 4;
-        break;
-      case 10:
-        points = 3;
-        break;
-      case 11:
-        points = 2;
-        break;
-      case 12:
-        points = 1;
-        break;
-    }
-
-    return points;
+    return pointMap[convertedPlace];
   }
 
   @override
@@ -157,8 +121,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   textFieldStream,
                   (player, place) => Player(
                       name: player.name,
-                      score: player.score +
-                          _getPoints(int.parse(place.controller.text)),
+                      score: player.score + _getPoints(int.parse(place.controller.text)),
                       icon: player.icon))
               .toList();
 
