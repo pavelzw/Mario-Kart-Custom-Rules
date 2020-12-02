@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/result_screen.dart';
 
 import '../app_localizations.dart';
 
@@ -52,8 +51,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _update(Timer timer) {
-    timeLeft =
-        max(0, (endTime - DateTime.now().millisecondsSinceEpoch) ~/ 1000);
+    timeLeft = max(0, (endTime - DateTime.now().millisecondsSinceEpoch) ~/ 1000);
 
     if (timeLeft == 0) {
       setState(() {
@@ -117,18 +115,14 @@ class _GameScreenState extends State<GameScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: FlatButton(
                       child: Text(revealed
-                          ? AppLocalizations.of(context)
-                              .translate('enter-results')
+                          ? AppLocalizations.of(context).translate('enter-results')
                           : AppLocalizations.of(context).translate('reveal')),
                       onPressed: () async {
                         if (!revealed) {
                           _reveal();
                         } else {
-                          Navigator.of(context).pop(await Navigator.of(context)
-                              .pushNamed('/results', arguments: {
-                            'players': widget.players,
-                            'target-place': randomPlace
-                          }));
+                          Navigator.of(context).pop(await Navigator.of(context).pushNamed('/results',
+                              arguments: {'players': widget.players, 'target-place': randomPlace}));
                         }
                       },
                       color: Colors.blue,
