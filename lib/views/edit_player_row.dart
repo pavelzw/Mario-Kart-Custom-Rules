@@ -53,7 +53,6 @@ class _EditPlayerRowState extends State<EditPlayerRow> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.player.name);
     return Container(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -73,7 +72,7 @@ class _EditPlayerRowState extends State<EditPlayerRow> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: widget.player.getPlayerName(context, widget.index),
+                labelText: Player.getDefaultName(context, widget.index),
               ),
             ),
           ),

@@ -26,6 +26,11 @@ class Player {
 
   String getPlayerName(BuildContext context, int index) {
     // index is the index of the player list, so 0-based
-    return name.isEmpty ? AppLocalizations.of(context).translate('player') + " " + (index + 1).toString() : name;
+    return name.isEmpty ? getDefaultName(context, index) : name;
+  }
+
+  static String getDefaultName(BuildContext context, int index) {
+    // index is the index of the player list, so 0-based
+    return AppLocalizations.of(context).translate('player') + " " + (index + 1).toString();
   }
 }
