@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mariokartcustomrules/models/player.dart';
+import 'package:mariokartcustomrules/views/layout_strategies/circle_layout.dart';
+import 'package:mariokartcustomrules/views/layout_strategies/grid_layout.dart';
+import 'package:mariokartcustomrules/views/layout_strategies/layout_strategy.dart';
 import 'package:mariokartcustomrules/views/player_tile.dart';
 
 import '../app_localizations.dart';
@@ -44,10 +47,6 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
     return MediaQuery.of(context).size.height - 74;
   }
 
-  Point _getCenter() {
-    return Point(_getWidth() / 2, _getHeight() / 2);
-  }
-
   Point _toPosition(Point point) {
     return Point(point.x - _getTileSize() / 2, point.y - _getTileSize() / 2);
   }
@@ -56,13 +55,26 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
     return _getShortestSide() * 0.25;
   }
 
-  Point _getPointOnCircle(int position, int numberOfPositions) {
-    double radius = _getShortestSide() * 0.35;
+  Point _getPosition(int position) {
+    LayoutStrategy strategy;
+    int amountOfPositions = widget.players.length;
+    if (amountOfPositions <= 6) {
+      strategy = CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
+    } else {
+      strategy = GridLayout(_getWidth(), _getHeight(), amountOfPositions);
+    }
+    return strategy.getPosition(position);
+  }
 
-    double anglePerPoint = 2 * pi / numberOfPositions;
-
-    double angle = anglePerPoint * position;
-    return Point(_getCenter().x + radius * sin(angle), _getCenter().y - radius * cos(angle));
+  Point _centerPosition() {
+    LayoutStrategy strategy;
+    int amountOfPositions = widget.players.length;
+    if (amountOfPositions <= 6) {
+      strategy = CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
+    } else {
+      strategy = GridLayout(_getWidth(), _getHeight(), amountOfPositions);
+    }
+    return strategy.centerPosition();
   }
 
   @override
@@ -87,10 +99,10 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
                 (player) {
                   int playerIndex = players.indexOf(player);
                   int playerPlace = playersSort.indexOf(player);
-
+                  Point pos = _getPosition(playerIndex);
                   return Positioned(
-                    top: _toPosition(_getPointOnCircle(playerIndex, players.length)).y,
-                    left: _toPosition(_getPointOnCircle(playerIndex, players.length)).x,
+                    top: _toPosition(pos).y,
+                    left: _toPosition(pos).x,
                     child: PlayerTile(
                       player: player,
                       place: playerPlace + 1,
@@ -102,8 +114,8 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
               ).toList()
                 ..add(
                   Positioned(
-                    top: _toPosition(_getCenter()).y,
-                    left: _toPosition(_getCenter()).x,
+                    top: _toPosition(_centerPosition()).y,
+                    left: _toPosition(_centerPosition()).x,
                     child: PlayerTile(
                       player: players[0],
                       place: 1,
