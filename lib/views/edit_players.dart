@@ -4,16 +4,6 @@ import 'package:mariokartcustomrules/views/edit_player_row.dart';
 
 import '../app_localizations.dart';
 
-class PlayerEntry {
-  final Player player;
-  TextEditingController controller;
-
-  PlayerEntry({
-    @required this.player,
-    @required this.controller,
-  });
-}
-
 class EditPlayers extends StatefulWidget {
   EditPlayers({Key key, this.players});
   final List<Player> players;
@@ -29,9 +19,27 @@ class _EditPlayersState extends State<EditPlayers> {
 
     setState(() {
       if (widget.players.isEmpty) {
-        widget.players.add(Player(name: ""));
+        widget.players.add(Player(
+          name: "",
+          index: 1,
+        ));
       }
     });
+  }
+
+  void _removePlayer(Player player) {
+    setState(() {
+      widget.players.remove(player);
+    });
+    _updatePlayerIndices();
+  }
+
+  void _updatePlayerIndices() {
+    for (Player player in widget.players) {
+      setState(() {
+        player.index = widget.players.indexOf(player) + 1;
+      });
+    }
   }
 
   @override
@@ -60,10 +68,8 @@ class _EditPlayersState extends State<EditPlayers> {
                 new Expanded(
                   child: ListView(
                     children: widget.players
-                        .map((player) => EditPlayerRow(
-                              player: player,
-                              index: widget.players.indexOf(player) + 1,
-                            ))
+                        .map((player) =>
+                            EditPlayerRow(player: player, remove: widget.players.length <= 1 ? null : _removePlayer))
                         .toList(),
                   ),
                 ),
@@ -76,7 +82,10 @@ class _EditPlayersState extends State<EditPlayers> {
               tooltip: AppLocalizations.of(context).translate("add-player"),
               onPressed: () {
                 setState(() {
-                  widget.players.add(Player(name: ""));
+                  widget.players.add(Player(
+                    name: "",
+                    index: widget.players.length + 1,
+                  ));
                 });
               },
               child: Icon(Icons.add),

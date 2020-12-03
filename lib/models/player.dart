@@ -4,11 +4,13 @@ import 'package:mariokartcustomrules/models/player_score.dart';
 
 class Player {
   String name;
+  int index;
   int score;
   String icon;
 
   Player({
     @required this.name,
+    this.index,
     this.score = 0,
     this.icon = "secret",
   });

@@ -49,7 +49,7 @@ class _ResultPlayerRowState extends State<ResultPlayerRow> {
         Expanded(
           child: TextField(
             controller: _controller,
-            decoration: InputDecoration(labelText: widget.playerScore.player.name),
+            decoration: InputDecoration(labelText: widget.playerScore.player.name), // todo if name = ""
             keyboardType: TextInputType.number,
             style: TextStyle(fontSize: 16),
             inputFormatters: <TextInputFormatter>[

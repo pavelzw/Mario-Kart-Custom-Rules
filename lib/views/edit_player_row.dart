@@ -4,21 +4,11 @@ import 'package:mariokartcustomrules/views/icon_picker.dart';
 
 import '../app_localizations.dart';
 
-class PlayerEntry {
-  final Player player;
-  TextEditingController controller;
-
-  PlayerEntry({
-    @required this.player,
-    @required this.controller,
-  });
-}
-
 class EditPlayerRow extends StatefulWidget {
   final Player player;
-  final int index;
+  final Function(Player) remove;
 
-  EditPlayerRow({Key key, this.player, this.index});
+  EditPlayerRow({Key key, @required this.player, @required this.remove});
 
   @override
   _EditPlayerRowState createState() => _EditPlayerRowState();
@@ -81,10 +71,16 @@ class _EditPlayerRowState extends State<EditPlayerRow> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).translate('player') + " " + widget.index.toString(),
+                labelText: AppLocalizations.of(context).translate('player') +
+                    " " +
+                    widget.player.index.toString(), // todo to PlayerText
               ),
             ),
           ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: widget.remove == null ? null : () => widget.remove(widget.player),
+          )
         ],
       ),
     );

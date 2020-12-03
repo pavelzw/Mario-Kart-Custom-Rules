@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/edit_players.dart';
+import 'package:mariokartcustomrules/views/player_name.dart';
 
 import '../app_localizations.dart';
-import 'game_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final List<Player> players;
@@ -18,8 +17,7 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>
-    with SingleTickerProviderStateMixin {
+class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
   List<Player> players;
 
   @override
@@ -47,7 +45,7 @@ class _MainScreenState extends State<MainScreen>
           ),
         ],
       ),
-      title: Text(p.name),
+      title: PlayerText(player: p),
       trailing: Text(p.score.toString()),
     );
   }
@@ -57,9 +55,8 @@ class _MainScreenState extends State<MainScreen>
     // leaderboard
     List<Player> playersSort = List.from(players);
     playersSort.sort((p1, p2) => p2.score - p1.score);
-    List<ListTile> leaderboardTiles = playersSort
-        .map((p) => _createLeaderboardItem(p, playersSort.indexOf(p) + 1))
-        .toList();
+    List<ListTile> leaderboardTiles =
+        playersSort.map((p) => _createLeaderboardItem(p, playersSort.indexOf(p) + 1)).toList();
     ListView leaderboard = ListView(
       physics: NeverScrollableScrollPhysics(),
       children: ListTile.divideTiles(
@@ -84,11 +81,9 @@ class _MainScreenState extends State<MainScreen>
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: FlatButton(
-                      child:
-                          Text(AppLocalizations.of(context).translate("play")),
+                      child: Text(AppLocalizations.of(context).translate("play")),
                       onPressed: () async {
-                        final players = await Navigator.of(context)
-                            .pushNamed('/game', arguments: this.players);
+                        final players = await Navigator.of(context).pushNamed('/game', arguments: this.players);
                         if (players != null) {
                           setState(() {
                             this.players = players;
@@ -112,8 +107,7 @@ class _MainScreenState extends State<MainScreen>
         child: Icon(Icons.edit),
         tooltip: AppLocalizations.of(context).translate("edit-players"),
         onPressed: () async {
-          final players = await Navigator.of(context)
-              .pushNamed('/edit-players', arguments: this.players);
+          final players = await Navigator.of(context).pushNamed('/edit-players', arguments: this.players);
 
           if (players != null) {
             setState(() {
