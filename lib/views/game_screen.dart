@@ -26,14 +26,14 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    const defaultDuration = 120;
+    const defaultDuration = 90;
 
     endTime = DateTime.now().millisecondsSinceEpoch + 1000 * defaultDuration;
 
     revealed = false;
     timer = new Timer.periodic(Duration(milliseconds: 500), _update);
     Random random = new Random();
-    randomPlace = random.nextInt(12) + 1;
+    randomPlace = random.nextInt(10) + 1;
 
     setState(() {
       timeText = _timePrint(defaultDuration);
@@ -83,56 +83,63 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage("assets/background.jpg"),
-        fit: BoxFit.cover,
-      )),
+        image: DecorationImage(
+          image: AssetImage("assets/background.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).translate('play')),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Row(
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      timeText,
+                      style: TextStyle(fontSize: 60, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    timeText,
-                    style: TextStyle(fontSize: 60, color: Colors.white),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: FlatButton(
+                        padding: const EdgeInsets.symmetric(vertical: 45),
+                        child: Text(
+                          revealed
+                              ? AppLocalizations.of(context).translate('enter-results')
+                              : AppLocalizations.of(context).translate('reveal'),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () async {
+                          if (!revealed) {
+                            _reveal();
+                          } else {
+                            Navigator.of(context).pop(await Navigator.of(context).pushNamed('/results',
+                                arguments: {'players': widget.players, 'target-place': randomPlace}));
+                          }
+                        },
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-                    child: FlatButton(
-                      child: Text(revealed
-                          ? AppLocalizations.of(context).translate('enter-results')
-                          : AppLocalizations.of(context).translate('reveal')),
-                      onPressed: () async {
-                        if (!revealed) {
-                          _reveal();
-                        } else {
-                          Navigator.of(context).pop(await Navigator.of(context).pushNamed('/results',
-                              arguments: {'players': widget.players, 'target-place': randomPlace}));
-                        }
-                      },
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
