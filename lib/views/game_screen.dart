@@ -112,7 +112,7 @@ class _GameScreenState extends State<GameScreen> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
                     child: FlatButton(
                       child: Text(revealed
                           ? AppLocalizations.of(context).translate('enter-results')

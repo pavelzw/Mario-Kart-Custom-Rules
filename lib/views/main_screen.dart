@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen>
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(16),
                     child: FlatButton(
                       child:
                           Text(AppLocalizations.of(context).translate("play")),

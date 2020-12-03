@@ -20,6 +20,7 @@ class IconPicker extends StatelessWidget {
     "baby_mario",
     "baby_luigi",
     "baby_peach",
+    "baby_daisy",
     "baby_rosalina",
     "metal_mario",
     "pink_gold_peach",
@@ -42,7 +43,8 @@ class IconPicker extends StatelessWidget {
     "link_botw",
     "villager_male",
     "villager_female",
-    "isabelle"
+    "isabelle",
+    "mii_amiibo"
   ];
   static List<Tuple2<String, Image>> icons = iconNames
       .map((name) =>
@@ -51,13 +53,17 @@ class IconPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return SizedBox(
+      width: 400,
+      child: Wrap(
         spacing: 5,
         children: (icons
             .map((t) => GestureDetector(
                   onTap: () => Navigator.pop(context, t.item1),
                   child: Tab(icon: t.item2),
                 ))
-            .toList()));
+            .toList()),
+      ),
+    );
   }
 }
