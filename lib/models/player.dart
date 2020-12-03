@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mariokartcustomrules/app_localizations.dart';
 import 'package:mariokartcustomrules/models/player_score.dart';
 
 class Player {
   String name;
-  int index;
   int score;
   String icon;
 
   Player({
     @required this.name,
-    this.index,
     this.score = 0,
     this.icon = "secret",
   });
@@ -23,5 +22,10 @@ class Player {
 
   String getPlayerIconPath() {
     return "assets/player_icons/" + icon + ".png";
+  }
+
+  String getPlayerName(BuildContext context, int index) {
+    // index is the index of the player list, so 0-based
+    return name.isEmpty ? AppLocalizations.of(context).translate('player') + " " + (index + 1).toString() : name;
   }
 }

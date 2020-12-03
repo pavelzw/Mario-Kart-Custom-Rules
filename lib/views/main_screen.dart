@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/player_name.dart';
 
 import '../app_localizations.dart';
 
@@ -29,7 +28,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     });
   }
 
-  ListTile _createLeaderboardItem(Player p, int position) {
+  ListTile _createLeaderboardItem(Player player, int position) {
     return ListTile(
       leading: Wrap(
         alignment: WrapAlignment.center,
@@ -40,13 +39,13 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             child: Text(position.toString()),
           ),
           Image(
-            image: AssetImage(p.getPlayerIconPath()),
+            image: AssetImage(player.getPlayerIconPath()),
             height: 45,
           ),
         ],
       ),
-      title: PlayerText(player: p),
-      trailing: Text(p.score.toString()),
+      title: Text(player.getPlayerName(context, players.indexOf(player))),
+      trailing: Text(player.score.toString()),
     );
   }
 

@@ -52,7 +52,13 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             Container(
               child: Column(
-                children: playerScores.map((player) => ResultPlayerRow(player, () => setState(() {}))).toList(),
+                children: playerScores
+                    .map((playerScore) => ResultPlayerRow(
+                          playerScore,
+                          widget.players.indexOf(playerScore.player),
+                          () => setState(() {}),
+                        ))
+                    .toList(),
               ),
             ),
           ],

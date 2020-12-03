@@ -13,33 +13,24 @@ class EditPlayers extends StatefulWidget {
 }
 
 class _EditPlayersState extends State<EditPlayers> {
+  List<Player> players;
+
   @override
   void initState() {
     super.initState();
 
     setState(() {
-      if (widget.players.isEmpty) {
-        widget.players.add(Player(
-          name: "",
-          index: 1,
-        ));
+      players = widget.players;
+      if (players.isEmpty) {
+        players.add(Player(name: ""));
       }
     });
   }
 
   void _removePlayer(Player player) {
     setState(() {
-      widget.players.remove(player);
+      players.remove(player);
     });
-    _updatePlayerIndices();
-  }
-
-  void _updatePlayerIndices() {
-    for (Player player in widget.players) {
-      setState(() {
-        player.index = widget.players.indexOf(player) + 1;
-      });
-    }
   }
 
   @override
@@ -52,40 +43,39 @@ class _EditPlayersState extends State<EditPlayers> {
             icon: Icon(Icons.save),
             onPressed: () {
               if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop(widget.players);
+                Navigator.of(context).pop(players);
               } else {
                 // first launch with no players
-                Navigator.of(context).pushReplacementNamed('/main', arguments: widget.players);
+                Navigator.of(context).pushReplacementNamed('/main', arguments: players);
               }
             },
           ),
         ],
       ),
-      body: widget.players == null || widget.players.isEmpty
-          ? CircularProgressIndicator()
-          : Column(
-              children: <Widget>[
-                new Expanded(
-                  child: ListView(
-                    children: widget.players
-                        .map((player) =>
-                            EditPlayerRow(player: player, remove: widget.players.length <= 1 ? null : _removePlayer))
-                        .toList(),
-                  ),
-                ),
-              ],
+      body: Column(
+        children: <Widget>[
+          new Expanded(
+            child: ListView(
+              children: players.map((player) {
+                return EditPlayerRow(
+                  key: UniqueKey(), // prevent ui update bug
+                  player: player,
+                  remove: players.length <= 1 ? null : _removePlayer,
+                  index: players.indexOf(player),
+                );
+              }).toList(),
             ),
-      floatingActionButton: widget.players.length >= 12
+          ),
+        ],
+      ),
+      floatingActionButton: players.length >= 12
           ? null
           : FloatingActionButton(
               heroTag: 'add',
               tooltip: AppLocalizations.of(context).translate("add-player"),
               onPressed: () {
                 setState(() {
-                  widget.players.add(Player(
-                    name: "",
-                    index: widget.players.length + 1,
-                  ));
+                  players.add(Player(name: ""));
                 });
               },
               child: Icon(Icons.add),

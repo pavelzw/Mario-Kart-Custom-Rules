@@ -5,9 +5,10 @@ import 'package:mariokartcustomrules/models/player_score.dart';
 
 class ResultPlayerRow extends StatefulWidget {
   final PlayerScore playerScore;
+  final int index;
   final Function update;
 
-  ResultPlayerRow(this.playerScore, this.update);
+  ResultPlayerRow(this.playerScore, this.index, this.update);
 
   @override
   _ResultPlayerRowState createState() => _ResultPlayerRowState();
@@ -49,7 +50,7 @@ class _ResultPlayerRowState extends State<ResultPlayerRow> {
         Expanded(
           child: TextField(
             controller: _controller,
-            decoration: InputDecoration(labelText: widget.playerScore.player.name), // todo if name = ""
+            decoration: InputDecoration(labelText: widget.playerScore.player.getPlayerName(context, widget.index)),
             keyboardType: TextInputType.number,
             style: TextStyle(fontSize: 16),
             inputFormatters: <TextInputFormatter>[

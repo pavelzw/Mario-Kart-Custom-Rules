@@ -6,9 +6,10 @@ import '../app_localizations.dart';
 
 class EditPlayerRow extends StatefulWidget {
   final Player player;
+  final int index;
   final Function(Player) remove;
 
-  EditPlayerRow({Key key, @required this.player, @required this.remove});
+  EditPlayerRow({Key key, @required this.player, @required this.index, @required this.remove}) : super(key: key);
 
   @override
   _EditPlayerRowState createState() => _EditPlayerRowState();
@@ -43,7 +44,7 @@ class _EditPlayerRowState extends State<EditPlayerRow> {
   void initState() {
     super.initState();
 
-    _controller = TextEditingController();
+    _controller = TextEditingController(text: widget.player.name);
 
     _controller.addListener(() {
       widget.player.name = _controller.text;
@@ -52,6 +53,7 @@ class _EditPlayerRowState extends State<EditPlayerRow> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.player.name);
     return Container(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -71,16 +73,12 @@ class _EditPlayerRowState extends State<EditPlayerRow> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).translate('player') +
-                    " " +
-                    widget.player.index.toString(), // todo to PlayerText
+                labelText: widget.player.getPlayerName(context, widget.index),
               ),
             ),
           ),
           IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: widget.remove == null ? null : () => widget.remove(widget.player),
-          )
+              icon: Icon(Icons.delete), onPressed: widget.remove == null ? null : () => widget.remove(widget.player)),
         ],
       ),
     );
