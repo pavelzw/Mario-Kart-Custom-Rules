@@ -8,6 +8,7 @@ import 'package:mariokartcustomrules/views/layout_strategies/circle_layout.dart'
 import 'package:mariokartcustomrules/views/layout_strategies/grid_layout.dart';
 import 'package:mariokartcustomrules/views/layout_strategies/layout_strategy.dart';
 import 'package:mariokartcustomrules/views/player_tile.dart';
+import 'package:mariokartcustomrules/views/start_tile.dart';
 
 import '../app_localizations.dart';
 
@@ -44,7 +45,7 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
   }
 
   double _getHeight() {
-    return MediaQuery.of(context).size.height - 74;
+    return MediaQuery.of(context).size.height * 0.9;
   }
 
   Point _toPosition(Point point) {
@@ -52,7 +53,7 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
   }
 
   double _getTileSize() {
-    return _getShortestSide() * 0.25;
+    return _getShortestSide() * 0.27;
   }
 
   Point _getPosition(int position) {
@@ -90,45 +91,58 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
         ),
         preferredSize: Size(double.infinity, _appBarHeight),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            child: Stack(
-              children: players.map(
-                (player) {
-                  int playerIndex = players.indexOf(player);
-                  int playerPlace = playersSort.indexOf(player);
-                  Point pos = _getPosition(playerIndex);
-                  return Positioned(
-                    top: _toPosition(pos).y,
-                    left: _toPosition(pos).x,
-                    child: PlayerTile(
-                      player: player,
-                      place: playerPlace + 1,
-                      index: playerIndex,
-                      size: _getTileSize(),
-                    ),
-                  );
-                },
-              ).toList()
-                ..add(
-                  Positioned(
-                    top: _toPosition(_centerPosition()).y,
-                    left: _toPosition(_centerPosition()).x,
-                    child: PlayerTile(
-                      player: players[0],
-                      place: 1,
-                      index: 2,
-                      size: _getTileSize(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: Stack(
+                children: players.map(
+                  (player) {
+                    int playerIndex = players.indexOf(player);
+                    int playerPlace = playersSort.indexOf(player);
+                    Point pos = _getPosition(playerIndex);
+                    return Positioned(
+                      top: _toPosition(pos).y,
+                      left: _toPosition(pos).x,
+                      child: PlayerTile(
+                        player: player,
+                        place: playerPlace + 1,
+                        index: playerIndex,
+                        size: _getTileSize(),
+                      ),
+                    );
+                  },
+                ).toList()
+                  ..add(
+                    Positioned(
+                      top: _toPosition(_centerPosition()).y,
+                      left: _toPosition(_centerPosition()).x,
+                      child: StartTile(
+                        size: _getTileSize(),
+                        onTap: () async {
+                          final players = await Navigator.of(context).pushNamed('/game', arguments: this.players);
+                          if (players != null) {
+                            setState(() {
+                              this.players = players;
+                            });
+                          }
+                        },
+                      ),
                     ),
                   ),
-                ),
+              ),
+              height: _getHeight(),
+              width: _getWidth(),
             ),
-            height: _getHeight(),
-            width: _getWidth(),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.edit),

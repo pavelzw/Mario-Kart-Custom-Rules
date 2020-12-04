@@ -26,7 +26,7 @@ class GridLayout extends LayoutStrategy {
     return ((amountOfPositions - 2) / 2).floor();
   }
 
-  double get gutterSize => tileSize * 0.15;
+  double get gutterSize => tileSize * 0.08;
 
   double leftBorder(amountInRow) => (screenWidth - amountInRow * tileSize - (amountInRow - 1) * gutterSize) / 2;
 

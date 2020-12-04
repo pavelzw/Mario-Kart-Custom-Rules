@@ -58,6 +58,8 @@ flutter:
     - lang/de.json
     - assets/player_icons/
     - assets/background.jpg
+    - assets/race_flag.png
+    - assets/positions/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
