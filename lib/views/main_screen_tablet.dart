@@ -61,7 +61,7 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
     if (amountOfPositions <= 6) {
       strategy = CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
     } else {
-      strategy = GridLayout(_getWidth(), _getHeight(), amountOfPositions);
+      strategy = GridLayout(_getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
     }
     return strategy.getPosition(position);
   }
@@ -72,7 +72,7 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
     if (amountOfPositions <= 6) {
       strategy = CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
     } else {
-      strategy = GridLayout(_getWidth(), _getHeight(), amountOfPositions);
+      strategy = GridLayout(_getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
     }
     return strategy.centerPosition();
   }
