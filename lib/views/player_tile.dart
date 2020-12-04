@@ -11,10 +11,14 @@ class PlayerTile extends StatelessWidget {
 
   PlayerTile({this.player, this.place, this.index, this.size});
 
+  double _getRelativePadding(double padding) {
+    return size * padding / 276;
+  }
+
   Image _getPositionImage(int place) {
     return Image(
       image: AssetImage("assets/positions/position" + place.toString() + ".png"),
-      height: 80,
+      height: size * 0.25,
     );
   }
 
@@ -31,36 +35,36 @@ class PlayerTile extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: 16,
-              left: 16,
+              top: _getRelativePadding(16),
+              left: _getRelativePadding(16),
               child: Image(
                 image: AssetImage(player.getPlayerIconPath()),
-                height: 100,
+                height: size * 0.3,
               ),
             ),
             Positioned(
-              bottom: 16.0 + 80,
-              left: 16,
-              right: 16,
+              bottom: _getRelativePadding(16.0 + 80),
+              left: _getRelativePadding(16),
+              right: _getRelativePadding(16),
               child: _getPositionImage(place),
             ),
             Positioned(
-              top: 40,
-              right: 16,
+              top: _getRelativePadding(40),
+              right: _getRelativePadding(16),
               child: Text(
                 player.score.toString() + " " + AppLocalizations.of(context).translate("points"),
-                style: TextStyle(fontSize: 48),
+                style: TextStyle(fontSize: size * 0.14),
                 textAlign: TextAlign.center,
               ),
             ),
             Positioned(
-              bottom: 16,
-              left: 16,
-              right: 16,
+              bottom: _getRelativePadding(16),
+              left: _getRelativePadding(16),
+              right: _getRelativePadding(16),
               child: Text(
                 player.getPlayerName(context, index),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 48),
+                style: TextStyle(fontSize: size * 0.15),
               ),
             ),
           ],
