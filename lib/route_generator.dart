@@ -11,9 +11,11 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
+    debugPrint("Routing to " + settings.name);
+
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => EditPlayers(players: []));
+        return MaterialPageRoute(builder: (_) => MainScreen(players: []));
       case '/main':
         if (args is List<Player>) {
           return MaterialPageRoute(builder: (_) => MainScreen(players: args));
@@ -25,7 +27,9 @@ class RouteGenerator {
             builder: (_) => EditPlayers(players: args),
           );
         }
-        return _errorRoute();
+        return MaterialPageRoute(
+          builder: (_) => EditPlayers(players: []),
+        );
       case '/game':
         if (args is List<Player>) {
           return MaterialPageRoute(

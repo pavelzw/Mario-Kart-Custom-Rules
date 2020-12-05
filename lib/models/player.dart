@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mariokartcustomrules/app_localizations.dart';
 import 'package:mariokartcustomrules/models/player_score.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class Player {
   String name;
@@ -33,5 +35,26 @@ class Player {
     return AppLocalizations.of(context).translate('player') +
         " " +
         (index + 1).toString();
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'score': score,
+        'icon': icon,
+      };
+
+  Player.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        score = json['score'],
+        icon = json['icon'];
+
+  static Future<Null> saveToPreferences(List<Player> players) async {
+    List<String> playersJson =
+        players.map((player) => json.encode(player.toJson())).toList();
+
+    debugPrint("Player list as JSON: " + playersJson.toString());
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('players', playersJson);
   }
 }

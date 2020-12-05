@@ -4,6 +4,8 @@ import 'package:mariokartcustomrules/device_manager.dart';
 import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/views/main_screen_phone.dart';
 import 'package:mariokartcustomrules/views/main_screen_tablet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class MainScreen extends StatefulWidget {
   final List<Player> players;
@@ -16,7 +18,33 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
+class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkPreferences();
+  }
+
+  Future<Null> _checkPreferences() async {
+    if (widget.players.isEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+
+      List<String> playersJsonStr = prefs.getStringList('players');
+      debugPrint("Got from SharedPreferences: " + playersJsonStr.toString());
+
+      if (playersJsonStr == null || playersJsonStr.isEmpty) {
+        Navigator.of(context)
+            .pushReplacementNamed('/edit-players', arguments: []);
+        return;
+      }
+      List<Player> players = playersJsonStr
+          .map((jsonStr) => Player.fromJson(json.decode(jsonStr)))
+          .toList();
+
+      Navigator.of(context).pushReplacementNamed('/main', arguments: players);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (DeviceManager.isTablet(context)) {
