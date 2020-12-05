@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/models/player.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '../app_localizations.dart';
 
@@ -37,12 +38,16 @@ class _GameScreenState extends State<GameScreen> {
 
     setState(() {
       timeText = _timePrint(defaultDuration);
+      Wakelock.enable();
     });
   }
 
   @override
   void dispose() {
     timer.cancel();
+    setState(() {
+      Wakelock.disable();
+    });
     super.dispose();
   }
 

@@ -27,6 +27,8 @@ dependencies:
 
   tuple: ^1.0.3
 
+  wakelock: ^0.2.1+1
+
   # localization
   flutter_localizations:
     sdk: flutter
