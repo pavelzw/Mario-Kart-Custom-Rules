@@ -17,7 +17,8 @@ class PlayerTile extends StatelessWidget {
 
   Image _getPositionImage(int place) {
     return Image(
-      image: AssetImage("assets/positions/position" + place.toString() + ".png"),
+      image:
+          AssetImage("assets/positions/position" + place.toString() + ".png"),
       height: size * 0.25,
     );
   }
@@ -30,7 +31,7 @@ class PlayerTile extends StatelessWidget {
       child: Card(
         color: Color.fromRGBO(240, 240, 240, 1),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
+          borderRadius: BorderRadius.circular(size * 0.27),
         ),
         child: Stack(
           children: [
@@ -52,7 +53,9 @@ class PlayerTile extends StatelessWidget {
               top: _getRelativePadding(40),
               right: _getRelativePadding(16),
               child: Text(
-                player.score.toString() + " " + AppLocalizations.of(context).translate("points"),
+                player.score.toString() +
+                    " " +
+                    AppLocalizations.of(context).translate("points"),
                 style: TextStyle(fontSize: size * 0.14),
                 textAlign: TextAlign.center,
               ),

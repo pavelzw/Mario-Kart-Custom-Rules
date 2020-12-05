@@ -8,4 +8,9 @@ class DeviceManager {
     // a common breakpoint for a typical 7-inch tablet.
     return shortestSide > 600;
   }
+
+  static bool isLandscapeMode(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    return shortestSide == MediaQuery.of(context).size.height;
+  }
 }

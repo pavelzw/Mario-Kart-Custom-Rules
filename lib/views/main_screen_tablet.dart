@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mariokartcustomrules/device_manager.dart';
 import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/views/layout_strategies/circle_layout.dart';
 import 'package:mariokartcustomrules/views/layout_strategies/grid_layout.dart';
@@ -23,7 +24,8 @@ class MainScreenTablet extends StatefulWidget {
   _MainScreenTabletState createState() => _MainScreenTabletState();
 }
 
-class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerProviderStateMixin {
+class _MainScreenTabletState extends State<MainScreenTablet>
+    with SingleTickerProviderStateMixin {
   List<Player> players;
   double _appBarHeight = 50;
 
@@ -53,28 +55,43 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
   }
 
   double _getTileSize() {
-    return _getShortestSide() * 0.27;
+    int amountOfPositions = widget.players.length;
+    double constant;
+    if (amountOfPositions <= 8) {
+      constant = 0.27;
+    } else if (amountOfPositions <= 10) {
+      // 4 on top row
+      if (DeviceManager.isLandscapeMode(context)) {
+        constant = 0.27;
+      } else {
+        constant = 0.22;
+      }
+    } else {
+      if (DeviceManager.isLandscapeMode(context)) {
+        constant = 0.27;
+      } else {
+        constant = 0.18;
+      }
+    }
+    return _getShortestSide() * constant;
+  }
+
+  LayoutStrategy _getStrategy() {
+    int amountOfPositions = widget.players.length;
+    if (amountOfPositions <= 6) {
+      return CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
+    }
+    return GridLayout(
+        _getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
   }
 
   Point _getPosition(int position) {
-    LayoutStrategy strategy;
-    int amountOfPositions = widget.players.length;
-    if (amountOfPositions <= 6) {
-      strategy = CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
-    } else {
-      strategy = GridLayout(_getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
-    }
+    LayoutStrategy strategy = _getStrategy();
     return strategy.getPosition(position);
   }
 
   Point _centerPosition() {
-    LayoutStrategy strategy;
-    int amountOfPositions = widget.players.length;
-    if (amountOfPositions <= 6) {
-      strategy = CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
-    } else {
-      strategy = GridLayout(_getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
-    }
+    LayoutStrategy strategy = _getStrategy();
     return strategy.centerPosition();
   }
 
@@ -127,7 +144,8 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
                       child: StartTile(
                         size: _getTileSize(),
                         onTap: () async {
-                          final players = await Navigator.of(context).pushNamed('/game', arguments: this.players);
+                          final players = await Navigator.of(context)
+                              .pushNamed('/game', arguments: this.players);
                           if (players != null) {
                             setState(() {
                               this.players = players;
@@ -148,7 +166,8 @@ class _MainScreenTabletState extends State<MainScreenTablet> with SingleTickerPr
         child: Icon(Icons.edit),
         tooltip: AppLocalizations.of(context).translate("edit-players"),
         onPressed: () async {
-          final players = await Navigator.of(context).pushNamed('/edit-players', arguments: this.players);
+          final players = await Navigator.of(context)
+              .pushNamed('/edit-players', arguments: this.players);
 
           if (players != null) {
             setState(() {
