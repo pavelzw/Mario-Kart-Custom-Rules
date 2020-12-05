@@ -46,19 +46,22 @@ class _ResultScreenState extends State<ResultScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 16, 0, 8),
               child: Text(
-                AppLocalizations.of(context).translate('enter-results-description'),
+                AppLocalizations.of(context)
+                    .translate('enter-results-description'),
                 style: TextStyle(fontSize: 16),
               ),
             ),
             Container(
-              child: Column(
-                children: playerScores
-                    .map((playerScore) => ResultPlayerRow(
-                          playerScore,
-                          widget.players.indexOf(playerScore.player),
-                          () => setState(() {}),
-                        ))
-                    .toList(),
+              child: Flexible(
+                child: ListView(
+                  children: playerScores
+                      .map((playerScore) => ResultPlayerRow(
+                            playerScore,
+                            widget.players.indexOf(playerScore.player),
+                            () => setState(() {}),
+                          ))
+                      .toList(),
+                ),
               ),
             ),
           ],
@@ -68,7 +71,9 @@ class _ResultScreenState extends State<ResultScreen> {
           ? null
           : FloatingActionButton(
               onPressed: () async {
-                List<Player> list = playerScores.map((playerScore) => Player.of(playerScore)).toList();
+                List<Player> list = playerScores
+                    .map((playerScore) => Player.of(playerScore))
+                    .toList();
 
                 Navigator.pop(context, list);
               },
@@ -78,6 +83,9 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   bool _cannotSave() {
-    return playerScores.fold(false, (previousValue, element) => previousValue || element.pointsThisRound == 0);
+    return playerScores.fold(
+        false,
+        (previousValue, element) =>
+            previousValue || element.pointsThisRound == 0);
   }
 }
