@@ -11,5 +11,9 @@
   "results": "Ergebnisse",
   "pick-icon": "Wähle ein Icon",
   "enter-results-description": "Gib die Platzierungen ein.",
-  "points": "Pkt."
+  "points": "Pkt.",
+  "reset-scores-dialog-title": "Punktzahlen zurücksetzen",
+  "reset-scores-dialog-content": "Möchtest du wirklich die Punktzahlen zurücksetzen?",
+  "yes": "Ja",
+  "no": "Nein"
 }

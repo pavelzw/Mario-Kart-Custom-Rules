@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DeviceManager {
+  static bool isOnIOS(BuildContext context) {
+    return Theme.of(context).platform == TargetPlatform.iOS;
+  }
+
   static bool isTablet(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
 

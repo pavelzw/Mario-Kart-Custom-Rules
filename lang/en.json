@@ -11,5 +11,9 @@
   "results": "Results",
   "pick-icon": "Pick an icon",
   "enter-results-description": "Enter the positions of the players.",
-  "points": "Pts."
+  "points": "Pts.",
+  "reset-scores-dialog-title": "Reset scores",
+  "reset-scores-dialog-content": "Do you really want to reset the player scores?",
+  "yes": "Yes",
+  "no": "No"
 }

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mariokartcustomrules/device_manager.dart';
 import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/views/edit_player_row.dart';
 
@@ -15,6 +17,75 @@ class EditPlayers extends StatefulWidget {
 class _EditPlayersState extends State<EditPlayers> {
   List<Player> players;
 
+  _showResetDialog() {
+    Future<bool> reset;
+    if (DeviceManager.isOnIOS(context)) {
+      reset = _showCupertinoResetDialog(() => Navigator.of(context).pop(false),
+          () => Navigator.of(context).pop(true));
+    } else {
+      reset = _showMaterialResetDialog(() => Navigator.of(context).pop(false),
+          () => Navigator.of(context).pop(true));
+    }
+    reset.then((reset) {
+      if (reset) {
+        Navigator.of(context).pop(players
+            .map((player) => Player(
+                  name: player.name,
+                  icon: player.icon,
+                ))
+            .toList());
+      }
+    });
+  }
+
+  Future<bool> _showMaterialResetDialog(Function actionNo, Function actionYes) {
+    return showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: Text(AppLocalizations.of(context)
+                  .translate("reset-scores-dialog-title")),
+              content: Text(AppLocalizations.of(context)
+                  .translate("reset-scores-dialog-content")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(AppLocalizations.of(context).translate("no")),
+                  onPressed: actionNo,
+                ),
+                FlatButton(
+                  child: Text(AppLocalizations.of(context).translate("yes")),
+                  onPressed: actionYes,
+                ),
+              ],
+            ));
+  }
+
+  Future<bool> _showCupertinoResetDialog(
+      Function actionNo, Function actionYes) {
+    return showDialog(
+        context: context,
+        builder: (_) => CupertinoAlertDialog(
+              title: Text(AppLocalizations.of(context)
+                  .translate("reset-scores-dialog-title")),
+              content: Text(AppLocalizations.of(context)
+                  .translate("reset-scores-dialog-content")),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: Text(AppLocalizations.of(context).translate("no")),
+                  onPressed: actionNo,
+                ),
+                CupertinoDialogAction(
+                  child: Text(AppLocalizations.of(context).translate("yes")),
+                  onPressed: actionYes,
+                ),
+              ],
+            ));
+  }
+
+  bool _canResetScores() {
+    return players.fold(
+        false, (previousValue, player) => previousValue || player.score > 0);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -22,7 +93,7 @@ class _EditPlayersState extends State<EditPlayers> {
     setState(() {
       players = widget.players;
       if (players.isEmpty) {
-        players.add(Player(name: ""));
+        players.add(Player());
       }
     });
   }
@@ -39,6 +110,13 @@ class _EditPlayersState extends State<EditPlayers> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate('edit-players')),
         actions: [
+          Visibility(
+            visible: _canResetScores(),
+            child: IconButton(
+              icon: Icon(Icons.restore),
+              onPressed: () => _showResetDialog(),
+            ),
+          ),
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
@@ -46,7 +124,8 @@ class _EditPlayersState extends State<EditPlayers> {
                 Navigator.of(context).pop(players);
               } else {
                 // first launch with no players
-                Navigator.of(context).pushReplacementNamed('/main', arguments: players);
+                Navigator.of(context)
+                    .pushReplacementNamed('/main', arguments: players);
               }
             },
           ),
@@ -54,7 +133,7 @@ class _EditPlayersState extends State<EditPlayers> {
       ),
       body: Column(
         children: <Widget>[
-          new Expanded(
+          Expanded(
             child: ListView(
               children: players.map((player) {
                 return EditPlayerRow(

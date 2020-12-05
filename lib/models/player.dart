@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mariokartcustomrules/app_localizations.dart';
 import 'package:mariokartcustomrules/models/player_score.dart';
 
@@ -9,7 +8,7 @@ class Player {
   String icon;
 
   Player({
-    @required this.name,
+    this.name = "",
     this.score = 0,
     this.icon = "secret",
   });
@@ -31,6 +30,8 @@ class Player {
 
   static String getDefaultName(BuildContext context, int index) {
     // index is the index of the player list, so 0-based
-    return AppLocalizations.of(context).translate('player') + " " + (index + 1).toString();
+    return AppLocalizations.of(context).translate('player') +
+        " " +
+        (index + 1).toString();
   }
 }
