@@ -56,9 +56,10 @@ class _ResultScreenState extends State<ResultScreen> {
                 child: ListView(
                   children: playerScores
                       .map((playerScore) => ResultPlayerRow(
-                            playerScore,
-                            widget.players.indexOf(playerScore.player),
-                            () => setState(() {}),
+                            key: UniqueKey(),
+                            playerScore: playerScore,
+                            index: widget.players.indexOf(playerScore.player),
+                            update: () => setState(() {}),
                           ))
                       .toList(),
                 ),
@@ -75,7 +76,8 @@ class _ResultScreenState extends State<ResultScreen> {
                     .map((playerScore) => Player.of(playerScore))
                     .toList();
 
-                Navigator.pop(context, list);
+                Player.saveToPreferences(list);
+                Navigator.of(context).pop(list);
               },
               child: Icon(Icons.save),
             ),

@@ -8,7 +8,7 @@ class ResultPlayerRow extends StatefulWidget {
   final int index;
   final Function update;
 
-  ResultPlayerRow(this.playerScore, this.index, this.update);
+  ResultPlayerRow({Key key, this.playerScore, this.index, this.update});
 
   @override
   _ResultPlayerRowState createState() => _ResultPlayerRowState();
@@ -50,11 +50,14 @@ class _ResultPlayerRowState extends State<ResultPlayerRow> {
         Expanded(
           child: TextField(
             controller: _controller,
-            decoration: InputDecoration(labelText: widget.playerScore.player.getPlayerName(context, widget.index)),
+            decoration: InputDecoration(
+                labelText: widget.playerScore.player
+                    .getPlayerName(context, widget.index)),
             keyboardType: TextInputType.number,
             style: TextStyle(fontSize: 16),
             inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'^((1[0-2])|([1-9]))$'), replacementString: _controller.text),
+              FilteringTextInputFormatter.allow(RegExp(r'^((1[0-2])|([1-9]))$'),
+                  replacementString: _controller.text),
             ],
           ),
         ),

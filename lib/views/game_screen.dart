@@ -45,9 +45,6 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void dispose() {
     timer.cancel();
-    setState(() {
-      Wakelock.disable();
-    });
     super.dispose();
   }
 
@@ -56,7 +53,8 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _update(Timer timer) {
-    timeLeft = max(0, (endTime - DateTime.now().millisecondsSinceEpoch) ~/ 1000);
+    timeLeft =
+        max(0, (endTime - DateTime.now().millisecondsSinceEpoch) ~/ 1000);
 
     if (timeLeft == 0) {
       setState(() {
@@ -124,16 +122,25 @@ class _GameScreenState extends State<GameScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 45),
                         child: Text(
                           revealed
-                              ? AppLocalizations.of(context).translate('enter-results')
-                              : AppLocalizations.of(context).translate('reveal'),
+                              ? AppLocalizations.of(context)
+                                  .translate('enter-results')
+                              : AppLocalizations.of(context)
+                                  .translate('reveal'),
                           style: TextStyle(fontSize: 20),
                         ),
                         onPressed: () async {
                           if (!revealed) {
                             _reveal();
                           } else {
-                            Navigator.of(context).pop(await Navigator.of(context).pushNamed('/results',
-                                arguments: {'players': widget.players, 'target-place': randomPlace}));
+                            setState(() {
+                              Wakelock.disable();
+                            });
+                            Navigator.of(context).pop(
+                                await Navigator.of(context)
+                                    .pushNamed('/results', arguments: {
+                              'players': widget.players,
+                              'target-place': randomPlace
+                            }));
                           }
                         },
                         color: Colors.blue,

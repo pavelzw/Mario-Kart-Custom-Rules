@@ -19,21 +19,23 @@ class _EditPlayersState extends State<EditPlayers> {
 
   _showResetDialog() {
     Future<bool> reset;
+    var _false = () => Navigator.of(context).pop(false);
+    var _true = () => Navigator.of(context).pop(true);
     if (DeviceManager.isOnIOS(context)) {
-      reset = _showCupertinoResetDialog(() => Navigator.of(context).pop(false),
-          () => Navigator.of(context).pop(true));
+      reset = _showCupertinoResetDialog(_false, _true);
     } else {
-      reset = _showMaterialResetDialog(() => Navigator.of(context).pop(false),
-          () => Navigator.of(context).pop(true));
+      reset = _showMaterialResetDialog(_false, _true);
     }
     reset.then((reset) {
       if (reset) {
-        Navigator.of(context).pop(players
+        List<Player> resetPlayers = players
             .map((player) => Player(
                   name: player.name,
                   icon: player.icon,
                 ))
-            .toList());
+            .toList();
+        Player.saveToPreferences(resetPlayers);
+        Navigator.of(context).pop(resetPlayers);
       }
     });
   }
@@ -120,6 +122,7 @@ class _EditPlayersState extends State<EditPlayers> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
+              Player.saveToPreferences(players);
               if (Navigator.of(context).canPop()) {
                 Navigator.of(context).pop(players);
               } else {
