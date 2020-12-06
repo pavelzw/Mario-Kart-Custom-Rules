@@ -6,22 +6,25 @@ class CircleLayout extends LayoutStrategy {
   CircleLayout(double screenWidth, double screenHeight, int amountOfPositions)
       : super(screenWidth, screenHeight, amountOfPositions);
 
-  double _getShortestSide() {
-    return min(screenWidth, screenHeight);
+  double get shortestSide => min(screenWidth, screenHeight);
+
+  double get anglePerPoint => 2 * pi / amountOfPositions;
+
+  double get radius => shortestSide * 0.35;
+
+  double get verticalOffset {
+    double extremeAngle = anglePerPoint * (amountOfPositions ~/ 2);
+    double bottomHeight = radius * cos(extremeAngle).abs();
+    return radius - bottomHeight;
   }
 
   @override
   Point<num> getPosition(int position) {
-    double radius = _getShortestSide() * 0.35;
-
-    double anglePerPoint = 2 * pi / amountOfPositions;
-
     double angle = anglePerPoint * position;
-    return Point(center.x + radius * sin(angle), center.y - radius * cos(angle));
+    return Point(center.x + radius * sin(angle),
+        center.y - radius * cos(angle) + verticalOffset / 2);
   }
 
   @override
-  Point<num> centerPosition() {
-    return center;
-  }
+  Point<num> centerPosition() => Point(center.x, center.y + verticalOffset / 2);
 }
