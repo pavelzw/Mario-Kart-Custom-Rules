@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/app_localizations.dart';
-import 'package:mariokartcustomrules/models/player.dart';
 
 class StartTile extends StatelessWidget {
   final double size;
