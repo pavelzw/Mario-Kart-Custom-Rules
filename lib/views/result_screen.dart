@@ -1,3 +1,4 @@
+import 'package:mariokartcustomrules/admob_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/models/player_score.dart';
@@ -77,6 +78,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     .toList();
 
                 Player.saveToPreferences(list);
+                AdMobService.getInstance().showInterstitialAd();
                 Navigator.of(context).pop(list);
               },
               child: Icon(Icons.save),

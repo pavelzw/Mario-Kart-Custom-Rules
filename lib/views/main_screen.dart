@@ -1,6 +1,8 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mariokartcustomrules/device_manager.dart';
+import 'package:mariokartcustomrules/admob_service.dart';
 import 'package:mariokartcustomrules/models/player.dart';
 import 'package:mariokartcustomrules/views/main_screen_phone.dart';
 import 'package:mariokartcustomrules/views/main_screen_tablet.dart';
@@ -22,7 +24,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    //AdMobService.getInstance().showHomeBannerAd();
     _checkPreferences();
+  }
+
+  @override
+  void dispose() {
+    //AdMobService.getInstance().hideHomeBannerAd();
+    super.dispose();
   }
 
   Future<Null> _checkPreferences() async {
