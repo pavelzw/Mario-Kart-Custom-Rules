@@ -26,9 +26,15 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<Null> _checkPreferences() async {
-    if (widget.players.isEmpty) {
-      final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
 
+    bool hideWelcomeScreen = prefs.getBool('hide-welcome-screen');
+    if (hideWelcomeScreen == null || !hideWelcomeScreen) {
+      Navigator.of(context).pushReplacementNamed('/welcome');
+      return;
+    }
+
+    if (widget.players.isEmpty) {
       List<String> playersJsonStr = prefs.getStringList('players');
       debugPrint("Got from SharedPreferences: " + playersJsonStr.toString());
 
