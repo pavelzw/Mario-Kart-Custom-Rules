@@ -38,6 +38,8 @@ dependencies:
 
   flutter_launcher_icons: ^0.8.1
 
+  introduction_screen: ^1.0.9
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,6 +68,7 @@ flutter:
     - assets/background.jpg
     - assets/race_flag.png
     - assets/positions/
+    - assets/welcome_page/
 
 flutter_icons:
   android: true

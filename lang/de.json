@@ -15,5 +15,14 @@
   "reset-scores-dialog-title": "Punktzahlen zurücksetzen",
   "reset-scores-dialog-content": "Möchtest du wirklich die Punktzahlen zurücksetzen?",
   "yes": "Ja",
-  "no": "Nein"
+  "no": "Nein",
+  "welcome": "Willkommen",
+  "welcome-to-mk-rules": "Willkommen zu Mario Kart Custom Rules!",
+  "how-this-game-works": "Wie dieses Spiel funktioniert",
+  "how-this-game-works-description-1": "In den ersten 90 Sekunden spielt jeder wie gewohnt Mario Kart.",
+  "how-this-game-works-description-2": "Wenn der Timer abgelaufen ist, sage ich das Ziel an.",
+  "how-this-game-works-description-3": "Die Person, die am Nächsten am Ziel ist, bekommt die meisten Punkte.",
+  "got-it": "Alles klar!",
+  "press-play": "Spiel starten",
+  "press-play-description": "Drücke kurz bevor das Rennen startet auf Spielen."
 }

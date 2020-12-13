@@ -21,8 +21,7 @@ class CircleLayout extends LayoutStrategy {
   @override
   Point<num> getPosition(int position) {
     double angle = anglePerPoint * position;
-    return Point(center.x + radius * sin(angle),
-        center.y - radius * cos(angle) + verticalOffset / 2);
+    return Point(center.x + radius * sin(angle), center.y - radius * cos(angle) + verticalOffset / 2);
   }
 
   @override

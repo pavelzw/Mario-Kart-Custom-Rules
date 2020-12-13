@@ -24,8 +24,7 @@ class MainScreenTablet extends StatefulWidget {
   _MainScreenTabletState createState() => _MainScreenTabletState();
 }
 
-class _MainScreenTabletState extends State<MainScreenTablet>
-    with SingleTickerProviderStateMixin {
+class _MainScreenTabletState extends State<MainScreenTablet> {
   List<Player> players;
   double _appBarHeight = 50;
 
@@ -81,8 +80,7 @@ class _MainScreenTabletState extends State<MainScreenTablet>
     if (amountOfPositions <= 6) {
       return CircleLayout(_getWidth(), _getHeight(), amountOfPositions);
     }
-    return GridLayout(
-        _getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
+    return GridLayout(_getTileSize(), _getWidth(), _getHeight(), amountOfPositions);
   }
 
   Point _getPosition(int position) {
@@ -105,6 +103,12 @@ class _MainScreenTabletState extends State<MainScreenTablet>
       appBar: PreferredSize(
         child: AppBar(
           title: Text(AppLocalizations.of(context).translate('app-title')),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.help),
+              onPressed: () => Navigator.of(context).pushNamed('/welcome'),
+            ),
+          ],
         ),
         preferredSize: Size(double.infinity, _appBarHeight),
       ),
@@ -144,8 +148,7 @@ class _MainScreenTabletState extends State<MainScreenTablet>
                       child: StartTile(
                         size: _getTileSize(),
                         onTap: () async {
-                          final players = await Navigator.of(context)
-                              .pushNamed('/game', arguments: this.players);
+                          final players = await Navigator.of(context).pushNamed('/game', arguments: this.players);
                           if (players != null) {
                             setState(() {
                               this.players = players;
@@ -166,8 +169,7 @@ class _MainScreenTabletState extends State<MainScreenTablet>
         child: Icon(Icons.edit),
         tooltip: AppLocalizations.of(context).translate("edit-players"),
         onPressed: () async {
-          final players = await Navigator.of(context)
-              .pushNamed('/edit-players', arguments: this.players);
+          final players = await Navigator.of(context).pushNamed('/edit-players', arguments: this.players);
 
           if (players != null) {
             setState(() {

@@ -19,19 +19,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _checkPreferences();
-  }
-
-  Future<Null> _checkPreferences() async {
+  Future<List<Player>> _checkPreferences() async {
     final prefs = await SharedPreferences.getInstance();
 
     bool hideWelcomeScreen = prefs.getBool('hide-welcome-screen');
     if (hideWelcomeScreen == null || !hideWelcomeScreen) {
       Navigator.of(context).pushReplacementNamed('/welcome');
-      return;
+      return null;
     }
 
     if (widget.players.isEmpty) {
@@ -39,24 +33,31 @@ class _MainScreenState extends State<MainScreen> {
       debugPrint("Got from SharedPreferences: " + playersJsonStr.toString());
 
       if (playersJsonStr == null || playersJsonStr.isEmpty) {
-        Navigator.of(context)
-            .pushReplacementNamed('/edit-players', arguments: []);
-        return;
+        Navigator.of(context).pushReplacementNamed('/edit-players', arguments: []);
+        return null;
       }
-      List<Player> players = playersJsonStr
-          .map((jsonStr) => Player.fromJson(json.decode(jsonStr)))
-          .toList();
+      List<Player> players = playersJsonStr.map((jsonStr) => Player.fromJson(json.decode(jsonStr))).toList();
 
-      Navigator.of(context).pushReplacementNamed('/main', arguments: players);
+      widget.players.addAll(players);
+      return players;
     }
+    return widget.players;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (DeviceManager.isTablet(context)) {
-      return MainScreenTablet(players: widget.players);
-    }
+    return FutureBuilder(
+      future: _checkPreferences(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (DeviceManager.isTablet(context)) {
+            return MainScreenTablet(players: snapshot.data);
+          }
 
-    return MainScreenPhone(players: widget.players);
+          return MainScreenPhone(players: snapshot.data);
+        }
+        return CircularProgressIndicator();
+      },
+    );
   }
 }

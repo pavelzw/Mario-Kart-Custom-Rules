@@ -15,5 +15,14 @@
   "reset-scores-dialog-title": "Reset scores",
   "reset-scores-dialog-content": "Do you really want to reset the player scores?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "welcome": "Welcome",
+  "welcome-to-mk-rules": "Welcome to Mario Kart Custom Rules!",
+  "how-this-game-works": "How this game works",
+  "how-this-game-works-description-1": "Everybody plays Mario Kart for the first 90 seconds as usual.",
+  "how-this-game-works-description-2": "When the timer is up, I say which place is the target.",
+  "how-this-game-works-description-3": "The person who is the nearest to this place gets the most points.",
+  "got-it": "Got it!",
+  "press-play": "Start the game",
+  "press-play-description": "Press play a few seconds before the race starts."
 }
