@@ -30,11 +30,14 @@ class Player {
     return name.isEmpty ? getDefaultName(context, index) : name;
   }
 
+  @override
+  String toString() {
+    return "Player(" + name + ", " + score.toString() + ", " + icon + ")";
+  }
+
   static String getDefaultName(BuildContext context, int index) {
     // index is the index of the player list, so 0-based
-    return AppLocalizations.of(context).translate('player') +
-        " " +
-        (index + 1).toString();
+    return AppLocalizations.of(context).translate('player') + " " + (index + 1).toString();
   }
 
   Map<String, dynamic> toJson() => {
@@ -49,8 +52,7 @@ class Player {
         icon = json['icon'];
 
   static Future<Null> saveToPreferences(List<Player> players) async {
-    List<String> playersJson =
-        players.map((player) => json.encode(player.toJson())).toList();
+    List<String> playersJson = players.map((player) => json.encode(player.toJson())).toList();
 
     debugPrint("Player list as JSON: " + playersJson.toString());
 
