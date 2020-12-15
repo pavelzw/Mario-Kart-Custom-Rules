@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mariokartcustomrules/app_localizations.dart';
-import 'package:mariokartcustomrules/models/player_score.dart';
+import 'package:mkcustomrules/app_localizations.dart';
+import 'package:mkcustomrules/models/player_score.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 

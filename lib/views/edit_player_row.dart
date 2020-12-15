@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/icon_picker.dart';
+import 'package:mkcustomrules/models/player.dart';
+import 'package:mkcustomrules/views/icon_picker.dart';
 
 import '../app_localizations.dart';
 

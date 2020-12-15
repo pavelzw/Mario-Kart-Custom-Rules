@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/device_manager.dart';
-import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/edit_player_row.dart';
+import 'package:mkcustomrules/device_manager.dart';
+import 'package:mkcustomrules/models/player.dart';
+import 'package:mkcustomrules/views/edit_player_row.dart';
 
 import '../app_localizations.dart';
 
@@ -44,10 +44,8 @@ class _EditPlayersState extends State<EditPlayers> {
     return showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              title: Text(AppLocalizations.of(context)
-                  .translate("reset-scores-dialog-title")),
-              content: Text(AppLocalizations.of(context)
-                  .translate("reset-scores-dialog-content")),
+              title: Text(AppLocalizations.of(context).translate("reset-scores-dialog-title")),
+              content: Text(AppLocalizations.of(context).translate("reset-scores-dialog-content")),
               actions: <Widget>[
                 FlatButton(
                   child: Text(AppLocalizations.of(context).translate("no")),
@@ -61,15 +59,12 @@ class _EditPlayersState extends State<EditPlayers> {
             ));
   }
 
-  Future<bool> _showCupertinoResetDialog(
-      Function actionNo, Function actionYes) {
+  Future<bool> _showCupertinoResetDialog(Function actionNo, Function actionYes) {
     return showDialog(
         context: context,
         builder: (_) => CupertinoAlertDialog(
-              title: Text(AppLocalizations.of(context)
-                  .translate("reset-scores-dialog-title")),
-              content: Text(AppLocalizations.of(context)
-                  .translate("reset-scores-dialog-content")),
+              title: Text(AppLocalizations.of(context).translate("reset-scores-dialog-title")),
+              content: Text(AppLocalizations.of(context).translate("reset-scores-dialog-content")),
               actions: <Widget>[
                 CupertinoDialogAction(
                   child: Text(AppLocalizations.of(context).translate("no")),
@@ -84,8 +79,7 @@ class _EditPlayersState extends State<EditPlayers> {
   }
 
   bool _canResetScores() {
-    return players.fold(
-        false, (previousValue, player) => previousValue || player.score > 0);
+    return players.fold(false, (previousValue, player) => previousValue || player.score > 0);
   }
 
   @override
@@ -127,8 +121,7 @@ class _EditPlayersState extends State<EditPlayers> {
                 Navigator.of(context).pop(players);
               } else {
                 // first launch with no players
-                Navigator.of(context)
-                    .pushReplacementNamed('/main', arguments: players);
+                Navigator.of(context).pushReplacementNamed('/main', arguments: players);
               }
             },
           ),

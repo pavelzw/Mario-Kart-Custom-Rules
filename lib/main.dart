@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/route_generator.dart';
+import 'package:mkcustomrules/route_generator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_localizations.dart';
 
 void main() {
-  runApp(MarioKartCustomRules());
+  runApp(MKCustomRules());
 }
 
-class MarioKartCustomRules extends StatelessWidget {
+class MKCustomRules extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mario Kart Custom Rules',
+      title: 'MK Custom Rules',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

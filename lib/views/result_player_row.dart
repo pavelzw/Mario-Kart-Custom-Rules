@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mariokartcustomrules/models/player_score.dart';
+import 'package:mkcustomrules/models/player_score.dart';
 
 class ResultPlayerRow extends StatefulWidget {
   final PlayerScore playerScore;
@@ -50,14 +50,11 @@ class _ResultPlayerRowState extends State<ResultPlayerRow> {
         Expanded(
           child: TextField(
             controller: _controller,
-            decoration: InputDecoration(
-                labelText: widget.playerScore.player
-                    .getPlayerName(context, widget.index)),
+            decoration: InputDecoration(labelText: widget.playerScore.player.getPlayerName(context, widget.index)),
             keyboardType: TextInputType.number,
             style: TextStyle(fontSize: 16),
             inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'^((1[0-2])|([1-9]))$'),
-                  replacementString: _controller.text),
+              FilteringTextInputFormatter.allow(RegExp(r'^((1[0-2])|([1-9]))$'), replacementString: _controller.text),
             ],
           ),
         ),

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mariokartcustomrules/models/player.dart';
+import 'package:mkcustomrules/models/player.dart';
 
 class PlayerScore {
   static final Map<int, int> pointMap = {1: 15, 2: 12, 3: 10, 4: 9, 5: 8, 6: 7, 7: 6, 8: 5, 9: 4, 10: 3, 11: 2, 12: 1};

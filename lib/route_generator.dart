@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/views/edit_players.dart';
-import 'package:mariokartcustomrules/views/game_screen.dart';
-import 'package:mariokartcustomrules/views/main_screen.dart';
-import 'package:mariokartcustomrules/views/result_screen.dart';
-import 'package:mariokartcustomrules/views/welcome_screen.dart';
+import 'package:mkcustomrules/views/edit_players.dart';
+import 'package:mkcustomrules/views/game_screen.dart';
+import 'package:mkcustomrules/views/main_screen.dart';
+import 'package:mkcustomrules/views/result_screen.dart';
+import 'package:mkcustomrules/views/welcome_screen.dart';
 
 import 'models/player.dart';
 

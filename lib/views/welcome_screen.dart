@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:mariokartcustomrules/device_manager.dart';
-import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/start_tile.dart';
+import 'package:mkcustomrules/device_manager.dart';
+import 'package:mkcustomrules/models/player.dart';
+import 'package:mkcustomrules/views/start_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_localizations.dart';

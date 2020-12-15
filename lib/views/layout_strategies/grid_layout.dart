@@ -1,12 +1,11 @@
 import 'dart:math';
 
-import 'package:mariokartcustomrules/views/layout_strategies/layout_strategy.dart';
+import 'package:mkcustomrules/views/layout_strategies/layout_strategy.dart';
 
 class GridLayout extends LayoutStrategy {
   final double tileSize;
 
-  GridLayout(this.tileSize, double screenWidth, double screenHeight,
-      int amountOfPositions)
+  GridLayout(this.tileSize, double screenWidth, double screenHeight, int amountOfPositions)
       : super(screenWidth, screenHeight, amountOfPositions);
 
   int get topRowAmount {
@@ -29,15 +28,10 @@ class GridLayout extends LayoutStrategy {
 
   double get gutterSize => tileSize * 0.08;
 
-  double leftBorder(amountInRow) =>
-      (screenWidth - amountInRow * tileSize - (amountInRow - 1) * gutterSize) /
-      2;
+  double leftBorder(amountInRow) => (screenWidth - amountInRow * tileSize - (amountInRow - 1) * gutterSize) / 2;
 
   Point _getRowPosition(int horizontalIndex, int horizontalAmount, int layer) {
-    return Point(
-        leftBorder(horizontalAmount) +
-            tileSize / 2 +
-            horizontalIndex * (tileSize + gutterSize),
+    return Point(leftBorder(horizontalAmount) + tileSize / 2 + horizontalIndex * (tileSize + gutterSize),
         center.y + layer * (tileSize + gutterSize));
   }
 
@@ -56,10 +50,8 @@ class GridLayout extends LayoutStrategy {
     }
     // skip center piece
     if (position < topRowAmount + 2 * middleAmount) {
-      return _getRowPosition(
-          position - topRowAmount + 1, middleAmount * 2 + 1, 0);
+      return _getRowPosition(position - topRowAmount + 1, middleAmount * 2 + 1, 0);
     }
-    return _getRowPosition(
-        position - topRowAmount - 2 * middleAmount, bottomAmount, 1);
+    return _getRowPosition(position - topRowAmount - 2 * middleAmount, bottomAmount, 1);
   }
 }

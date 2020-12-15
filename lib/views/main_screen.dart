@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/device_manager.dart';
-import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/main_screen_phone.dart';
-import 'package:mariokartcustomrules/views/main_screen_tablet.dart';
+import 'package:mkcustomrules/device_manager.dart';
+import 'package:mkcustomrules/models/player.dart';
+import 'package:mkcustomrules/views/main_screen_phone.dart';
+import 'package:mkcustomrules/views/main_screen_tablet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 

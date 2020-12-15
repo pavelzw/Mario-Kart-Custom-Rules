@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mariokartcustomrules/device_manager.dart';
-import 'package:mariokartcustomrules/models/player.dart';
-import 'package:mariokartcustomrules/views/layout_strategies/circle_layout.dart';
-import 'package:mariokartcustomrules/views/layout_strategies/grid_layout.dart';
-import 'package:mariokartcustomrules/views/layout_strategies/layout_strategy.dart';
-import 'package:mariokartcustomrules/views/player_tile.dart';
-import 'package:mariokartcustomrules/views/start_tile.dart';
+import 'package:mkcustomrules/device_manager.dart';
+import 'package:mkcustomrules/models/player.dart';
+import 'package:mkcustomrules/views/layout_strategies/circle_layout.dart';
+import 'package:mkcustomrules/views/layout_strategies/grid_layout.dart';
+import 'package:mkcustomrules/views/layout_strategies/layout_strategy.dart';
+import 'package:mkcustomrules/views/player_tile.dart';
+import 'package:mkcustomrules/views/start_tile.dart';
 
 import '../app_localizations.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mariokartcustomrules/app_localizations.dart';
-import 'package:mariokartcustomrules/models/player.dart';
+import 'package:mkcustomrules/app_localizations.dart';
+import 'package:mkcustomrules/models/player.dart';
 
 class PlayerTile extends StatelessWidget {
   final Player player;
@@ -17,8 +17,7 @@ class PlayerTile extends StatelessWidget {
 
   Image _getPositionImage(int place) {
     return Image(
-      image:
-          AssetImage("assets/positions/position" + place.toString() + ".png"),
+      image: AssetImage("assets/positions/position" + place.toString() + ".png"),
       height: size * 0.25,
     );
   }
@@ -53,9 +52,7 @@ class PlayerTile extends StatelessWidget {
               top: _getRelativePadding(40),
               right: _getRelativePadding(16),
               child: Text(
-                player.score.toString() +
-                    " " +
-                    AppLocalizations.of(context).translate("points"),
+                player.score.toString() + " " + AppLocalizations.of(context).translate("points"),
                 style: TextStyle(fontSize: size * 0.14),
                 textAlign: TextAlign.center,
               ),

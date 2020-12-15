@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:mariokartcustomrules/views/layout_strategies/layout_strategy.dart';
+import 'package:mkcustomrules/views/layout_strategies/layout_strategy.dart';
 
 class CircleLayout extends LayoutStrategy {
   CircleLayout(double screenWidth, double screenHeight, int amountOfPositions)
